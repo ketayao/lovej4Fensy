@@ -1,0 +1,11 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+/target
+/.settings
+/.classpath
+/.project
+/src/main/resources/db.properties
+/src/main/resources/loveJ.properties

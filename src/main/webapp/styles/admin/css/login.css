@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+body {background-color:#edf1f3; font-family:Verdana, Geneva, sans-serif; font-size:12px;}
+#content {
+  position: absolute;
+  width:340px;
+  height:340px;
+  left:50%;
+  top:50%;
+  margin-left:-170px;
+  margin-top:-170px;
+  background-color:#FFF;
+}
+#content div {padding:0px; margin:0xp; float:left;}
+#content div.tl {width:10px; height:10px; background: url('../images/tl.jpg');}
+#content div.t {width:320px; height:9px; border-top:solid 1px #d2dce1;}
+#content div.tr {width:10px; height:10px; background: url('../images/tr.jpg')}	
+#content div.c  {width:338px; height:320px; border:none; border-left:solid 1px #d2dce1; border-right:solid 1px #d2dce1;}
+#content div.bl {width:10px; height:10px; background: url('../images/bl.jpg');}
+#content div.b {width:320px; height:9px; border-bottom:solid 1px #d2dce1; background-color:#eff4f6;}
+#content div.br {width:10px; height:10px; background: url('../images/br.jpg')}	
+div.c div.in {width:338px; height:260px;}
+
+div.c div.btn {width:298px; height:74px; background-color:#eff4f6; padding:0px 20px !important; border-top:solid 1px #dde0e8;}
+div.c div.btn div {margin-top:20px;}
+
+.toplogo {padding:3px 20px 0px 20px!important;  height:60px;}
+.topdiv1 {padding:20px 20px 10px 20px!important;  height:65px;}
+.topdiv2 {padding:0px 20px 0px 20px !important;}
+.label {height:20; line-height:20px; font-size:14px; color:#8e8e8e; display:block; padding-bottom:10px;}
+.input {width:292px; height:30px; font-size:20px; color:#5f5f5f;}
+
+.remember { width:218px;  height: 34px; line-height:34px;}
+.login {width: 80px; height: 34px; background: #fff url('../images/login.jpg') no-repeat 100% 0; border:0px; cursor:pointer;}
