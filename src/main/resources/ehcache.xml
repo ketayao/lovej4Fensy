@@ -1,0 +1,138 @@
+<ehcache updateCheck="false" dynamicConfig="false">
+
+    <!-- Sets the path to the directory where cache .data files are created.
+
+         If the path is a Java System Property it is replaced by
+         its value in the running VM.
+
+         The following properties are translated:
+         user.home - User's home directory
+         user.dir - User's current working directory
+         java.io.tmpdir - Default temp file path -->
+    <diskStore path="java.io.tmpdir"/>
+	
+	<cacheManagerEventListenerFactory class="" properties=""/>
+
+    <!--Default Cache configuration. These will applied to caches programmatically created through
+        the CacheManager.
+
+        The following attributes are required for defaultCache:
+
+        maxInMemory       - Sets the maximum number of objects that will be created in memory
+        eternal           - Sets whether elements are eternal. If eternal,  timeouts are ignored and the element
+                            is never expired.
+        timeToIdleSeconds - Sets the time to idle for an element before it expires. Is only used
+                            if the element is not eternal. Idle time is now - last accessed time
+        timeToLiveSeconds - Sets the time to live for an element before it expires. Is only used
+                            if the element is not eternal. TTL is now - creation time
+        overflowToDisk    - Sets whether elements can overflow to disk when the in-memory cache
+                            has reached the maxInMemory limit.
+
+        -->
+    <defaultCache
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="120"
+        overflowToDisk="true"
+        />
+
+    <cache
+    	name="Article"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="ArticleQueryCache"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="ArticleTag"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="Attach"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />                        
+        
+    <cache
+    	name="Category"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />	
+        
+    <cache
+    	name="Comment"
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="Contact"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="Link"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />
+        
+    <cache
+    	name="SiteConfig"
+        maxElementsInMemory="10"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />                        
+        
+    <cache
+    	name="Tag"
+        maxElementsInMemory="100"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />	
+    
+    <cache
+    	name="User"
+        maxElementsInMemory="10"
+        eternal="false"
+        timeToIdleSeconds="3000"
+        timeToLiveSeconds="3000"
+        overflowToDisk="true"
+        />	                	
+</ehcache>

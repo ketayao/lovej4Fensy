@@ -1,0 +1,67 @@
+/**
+ * <pre>
+ * Copyright:		Copyright(C) 2011-2012, ketayao.com
+ * Date:			2013年8月5日
+ * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
+ * Version          1.0.0
+ * Description:		
+ *
+ * </pre>
+ **/
+package com.ketayao.action.admin;
+
+import javax.servlet.http.HttpSession;
+
+import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.util.CryptUtils;
+import com.ketayao.pojo.User;
+
+/** 
+ * 	
+ * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
+ * Version  1.0.0
+ * @since   2013年8月5日 下午4:38:12 
+ */
+public class LoginAction {
+	private static final String LOGIN = "admin/login";
+	private static final String INDEX = "admin/index";
+	
+	public String index() {
+		return LOGIN;
+	}
+	
+	public String login(RequestContext rc) throws Exception {
+		String username = rc.param("username");
+		String password = rc.param("password");
+		
+		User user = User.INSTANCE.getByAttr("username", username);
+		if (user == null) {
+			rc.setRequestAttr("msg", "NotFoundUserException");
+			return LOGIN;
+		}
+		
+		String dbPwd = CryptUtils.decrypt(user.getPassword(), user.getSalt());
+		if (!password.equals(dbPwd)) {
+			rc.setRequestAttr("msg", "NotMatchUserPasswordException");
+			return LOGIN;
+		}
+		
+		if (user.isBlocked()) {
+			rc.setRequestAttr("msg", "UserIsFrozenException");
+			return LOGIN; 
+		}
+
+		rc.saveUserInCookie(user, false);
+		//rc.session(true).setAttribute(Constants.LOGIN_USER, user);
+		return INDEX;
+	}
+	
+	public String logout(RequestContext rc) throws Exception {
+		HttpSession session = rc.session(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		rc.deleteUserInCookie();
+		return "redirect:" + rc.contextPath() + "/admin/login"; 
+	}
+}

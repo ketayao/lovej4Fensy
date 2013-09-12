@@ -1,0 +1,32 @@
+/* CSS */
+@import url("reset.css");
+@import url("layout.css");
+
+.lovej-validate {color:red;line-height: 24px !important;height: 24px;}
+.lovej-action {color:red;font-size: 15px;text-align: center;}
+.lovej-autoindent{width: 650px;margin:0px 0px 20px 20px;padding: 0px 0px 10px 0px;border: solid 1px #DDDDDD;float:left;}
+.lovej-autoindent div{width: 160px;float:left;margin-top: 10px;}
+.lovej-choise{width: 655px;margin:0px 0px 10px 0px;padding: 0px 0px 10px 0px;border: solid 1px #DDDDDD;float:left;}
+.lovej-choise div.choise{width: 160px;float:left;margin-top: 10px;}
+.lovej-choise div.choise-group{width: 655px;float: left;}
+
+/*CSS megas512 style pagination*/
+
+.megas512 {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 3px; PADDING-TOP: 3px; TEXT-ALIGN: center
+}
+.megas512 A {
+	BORDER-RIGHT: #dedfde 1px solid; PADDING-RIGHT: 6px; BACKGROUND-POSITION: 50% bottom; BORDER-TOP: #dedfde 1px solid; PADDING-LEFT: 6px; PADDING-BOTTOM: 2px; BORDER-LEFT: #dedfde 1px solid; COLOR: #99210b; MARGIN-RIGHT: 3px; PADDING-TOP: 2px; BORDER-BOTTOM: #dedfde 1px solid; TEXT-DECORATION: none
+}
+.megas512 A:hover {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; BACKGROUND-IMAGE: none; BORDER-LEFT: #000 1px solid; COLOR: #fff; BORDER-BOTTOM: #000 1px solid; BACKGROUND-COLOR: #777777
+}
+.megas512 A:active {
+	BORDER-RIGHT: #000 1px solid; BORDER-TOP: #000 1px solid; BACKGROUND-IMAGE: none; BORDER-LEFT: #000 1px solid; COLOR: #fff; BORDER-BOTTOM: #000 1px solid; BACKGROUND-COLOR: #777777
+}
+.megas512 SPAN.current {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; FONT-WEIGHT: bold; PADDING-BOTTOM: 2px; COLOR: #99210b; MARGIN-RIGHT: 3px; PADDING-TOP: 2px
+}
+.megas512 SPAN.disabled {
+	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; PADDING-BOTTOM: 2px; COLOR: #adaaad; MARGIN-RIGHT: 3px; PADDING-TOP: 2px
+}
