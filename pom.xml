@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ketayao</groupId>
   <artifactId>lovej4Fensy</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1-BETA</version>
   <packaging>war</packaging>
   
   <dependencies>
@@ -15,9 +15,11 @@
   	<dependency>
 		<groupId>com.ketayao</groupId>
 		<artifactId>fensy</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1-BETA</version>
+		<!--
 		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fensy-0.0.1-SNAPSHOT.jar</systemPath>		
+		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fensy-0.0.1-BETA.jar</systemPath>
+		-->
   	</dependency>
   	<dependency>
 		<groupId>com.ketayao</groupId>
@@ -27,7 +29,7 @@
 		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/lucene-search-0.0.1-SNAPSHOT.jar</systemPath>		
   	</dependency> 
   	
- <!-- db -->          	
+ 	<!-- db -->          	
 	<dependency>
 		<groupId>net.sf.ehcache</groupId>
 		<artifactId>ehcache-core</artifactId>
@@ -159,7 +161,13 @@
 		<artifactId>jetty-webapp</artifactId>
 		<version>7.6.11.v20130520</version>
 		<scope>test</scope>
-	</dependency>	           	
+	</dependency>
+	<dependency>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-jsp</artifactId>
+		<version>7.6.11.v20130520</version>
+		<scope>test</scope>
+	</dependency>				           	
   </dependencies>
   
   <build>

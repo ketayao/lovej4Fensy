@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,15 +49,14 @@ public class ArticleAction {
 
 	public String create(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
 		User user = User.getLoginUser(rc);
-		
-		Article article = new Article();
-		BeanUtils.populate(article, rc.getParameterMap());
+		Article article = rc.convertBean(Article.class);
+		//BeanUtils.populate(article, rc.getParameterMap());
 		
 		article.setUserId(user.getId());
 		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		// 更新置顶时间
-		boolean top = BooleanUtils.toBoolean(rc.param("top", "false"));
+		boolean top = BooleanUtils.toBoolean(rc.getParam("top", "false"));
 		if (top == true) {
 			article.setTopTime(now);
 		}
@@ -68,7 +66,7 @@ public class ArticleAction {
 		
 		article.save();
 		
-		String tags = rc.param("tags");
+		String tags = rc.getParam("tags");
 		String[] tagArray = null;
 		if (StringUtils.isNotBlank(tags)) {
 			tagArray = com.ketayao.util.StringUtils.split(tags, ",");
@@ -84,9 +82,9 @@ public class ArticleAction {
 	public String read(RequestContext rc) {
 		User user = User.getLoginUser(rc);
 		
-		long categoryId = rc.param("categoryId", 0L);
+		long categoryId = rc.getParam("categoryId", 0L);
 		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(rc.param("pageIndex", 1));
+		pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
 		
 		List<Article> articles = null;
 		if (categoryId > 0) {
@@ -108,9 +106,9 @@ public class ArticleAction {
 	}
 	
 	public String preUpdate(RequestContext rc) throws Exception {
-		long id = rc.param("id", 0L);
-		long categoryId = rc.param("categoryId", 0L);
-		int pageIndex = rc.param("pageIndex", 1);
+		long id = rc.getParam("id", 0L);
+		long categoryId = rc.getParam("categoryId", 0L);
+		int pageIndex = rc.getParam("pageIndex", 1);
 		
 		List<Category> parents = Category.INSTANCE.findTree(false);
 		Article article = Article.INSTANCE.get(id);
@@ -135,13 +133,13 @@ public class ArticleAction {
 	}
 	
 	public String update(RequestContext rc) throws Exception {
-		Article article = Article.INSTANCE.get(rc.id());
+		Article article = Article.INSTANCE.get(rc.getId());
 		article.setOldStatus(article.getStatus());
-		BeanUtils.populate(article, rc.getParameterMap());
+		rc.populate(article);
 		
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		// 更新置顶时间
-		boolean top = BooleanUtils.toBoolean(rc.param("top", "false"));
+		boolean top = BooleanUtils.toBoolean(rc.getParam("top", "false"));
 		if (top == true) {
 			article.setTopTime(timestamp);
 		}
@@ -152,7 +150,7 @@ public class ArticleAction {
 				new Object[]{article.getTitle(), article.getContent(), article.getKeywords(), article.getSummary(),
 				article.getStatus(), article.getTrash(), article.getModifyTime(), article.getTopTime(), article.getCategoryId()});
 		
-		String tags = rc.param("tags");
+		String tags = rc.getParam("tags");
 		String[] tagArray = null;
 		if (StringUtils.isNotBlank(tags)) {
 			tagArray = com.ketayao.util.StringUtils.split(tags, ",");
@@ -168,12 +166,12 @@ public class ArticleAction {
 	}
 	
 	public String delete(RequestContext rc) {
-		long id = rc.param("id", 0L);	
+		long id = rc.getParam("id", 0L);	
 		Article article = Article.INSTANCE.get(id);
 		article.delete();
 		
-		return "redirect:" + rc.contextPath() + "/admin/article/read?pageIndex=" 
-					+ rc.param("pageIndex", 1L) + "&categoryId=" + rc.param("categoryId", "");
+		return "redirect:" + rc.getContextPath() + "/admin/article/read?pageIndex=" 
+					+ rc.getParam("pageIndex", 1L) + "&categoryId=" + rc.getParam("categoryId", "");
 	}
 	
 	public String view(RequestContext rc, Long id) {

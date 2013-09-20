@@ -120,5 +120,8 @@ public class PreviewHtml {
         String output = builder.toString();      
 		
 		System.out.println(PreviewHtml.truncateHTML(output, 200));
+		
+		reader.close();
+		fileReader.close();
 	}
 }

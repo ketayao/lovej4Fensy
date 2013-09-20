@@ -51,6 +51,13 @@ $(document).ready(function(){
 	font-size: 12px !important;
 	float: left !important;
 }
+/**syntaxhighlighter强行换行**/
+.syntaxhighlighter td {
+	word-break:break-all !important;
+}
+div.toolbar {
+	height:16px !important;
+}
 </style>
 <style type="text/css">
 .recentcomments a {

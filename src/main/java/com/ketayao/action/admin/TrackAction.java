@@ -44,7 +44,7 @@ public class TrackAction {
 	
 	@SuppressWarnings("unchecked")
 	public String r(RequestContext rc) throws Exception {		
-		String playlist = rc.context().getRealPath("/") + PLAY_PATH;
+		String playlist = rc.getContext().getRealPath("/") + PLAY_PATH;
 		
 		SAXReader saxReader = new SAXReader();
 		saxReader.setEncoding("UTF-8");
@@ -75,14 +75,14 @@ public class TrackAction {
 
 	@SuppressWarnings("rawtypes")
 	public String u(RequestContext rc) throws Exception {
-		String playlist = rc.context().getRealPath("/") + PLAY_PATH;
+		String playlist = rc.getContext().getRealPath("/") + PLAY_PATH;
 		Document document = DocumentHelper.createDocument();
 
 		Element rootElement = document.addElement("playlist");
 		Element tracksElement = rootElement.addElement("trackList");
 		
 		TrackList trackList = new TrackList();
-		Map map = rc.getParameterMap();
+		Map map = rc.getRequest().getParameterMap();
 		
 		for (int i = 0; i < map.size()/3; i++) {
 			trackList.getTracks().add(new Track());

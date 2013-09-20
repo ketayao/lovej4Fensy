@@ -41,7 +41,7 @@ public class User extends POJO implements IUser {
 	private byte frozen = 0;//是否冻结
 	private String email;
 	
-	private boolean blocked = false;
+	//private boolean blocked = false;
 	
 	private byte role = IUser.ROLE_GENERAL;
 	
@@ -154,7 +154,7 @@ public class User extends POJO implements IUser {
 	 * @return  
 	 */
 	public static User getLoginUser(RequestContext rc) {
-		Object loginUser = rc.requestAttr(Constants.LOGIN_USER);
+		Object loginUser = rc.getRequestAttr(Constants.LOGIN_USER);
 		if (loginUser == null) {
 			// get user id from cookie
 			IUser cookie_user = rc.getUserFromCookie();

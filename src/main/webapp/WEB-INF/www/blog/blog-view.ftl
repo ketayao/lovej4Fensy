@@ -27,6 +27,7 @@
   	<div class="entry-content">
 	<#noescape>${article.content}</#noescape>
 	<#if article.attaches?size gt 0>
+		<h4>附件：</h4>
 		<ul>
 		<#list article.attaches as a>
   			<li><a href="${rc.contextPath}/download?file=${a.url}" target="_blank">${a.description}</a>&nbsp;&nbsp;(下载次数:${a.download})</li>

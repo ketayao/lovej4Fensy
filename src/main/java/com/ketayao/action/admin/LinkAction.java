@@ -17,8 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.ketayao.fensy.mvc.RequestContext;
 import com.ketayao.pojo.Link;
 import com.ketayao.system.Constants;
@@ -44,7 +42,7 @@ public class LinkAction {
 	
 	public String c(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
 		Link link = new Link();
-		BeanUtils.populate(link, rc.getParameterMap());
+		rc.populate(link);
 		
 		if (link != null && link.getName() != null) {
 			link.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -67,7 +65,7 @@ public class LinkAction {
 	 */
 	public String r(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
 		PageInfo pageInfo = new PageInfo();
-		BeanUtils.populate(pageInfo, rc.getParameterMap());
+		rc.populate(pageInfo);
 		
 		List<Link> links = Link.INSTANCE.findPage(pageInfo, false);
 		pageInfo.setUrl("readLink?pageIndex=");
@@ -79,15 +77,15 @@ public class LinkAction {
 	}
 	
 	public String pu(RequestContext rc) {
-		Link link = Link.INSTANCE.get(rc.id());
+		Link link = Link.INSTANCE.get(rc.getId());
 		rc.setRequestAttr("link", link);
-		rc.setRequestAttr("pageIndex", rc.param("pageIndex", 1));
+		rc.setRequestAttr("pageIndex", rc.getParam("pageIndex", 1));
 		return UPDATE;
 	}
 	
 	public String u(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
-		Link link = Link.INSTANCE.get(rc.id());
-		BeanUtils.populate(link, rc.getParameterMap());
+		Link link = Link.INSTANCE.get(rc.getId());
+		rc.populate(link);
 		
 		link.updateAttrs(new String[]{"description", "name", "site", "status", "trash"}, new Object[]{
 				link.getDescription(), link.getName(), link.getSite(), link.getStatus(), link.getTrash()
@@ -95,13 +93,13 @@ public class LinkAction {
 		
 		rc.setRequestAttr(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
 		rc.setRequestAttr("link", link);
-		rc.setRequestAttr("pageIndex", rc.param("pageIndex", 1));
+		rc.setRequestAttr("pageIndex", rc.getParam("pageIndex", 1));
 
 		return UPDATE;
 	}
 
 	public String d(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
-		Link link = Link.INSTANCE.get(rc.id());
+		Link link = Link.INSTANCE.get(rc.getId());
 		link.delete();
 		
 		return r(rc);

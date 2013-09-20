@@ -28,6 +28,6 @@ public class CommentAction {
 		Comment comment = Comment.INSTANCE.get(id);
 		comment.delete();
 		
-		return "redirect:" + rc.contextPath() + "/view/" + comment.getArticleId() + "#comments";
+		return "redirect:" + rc.getContextPath() + "/view/" + comment.getArticleId() + "#comments";
 	}
 }

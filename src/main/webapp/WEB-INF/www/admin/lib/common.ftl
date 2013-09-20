@@ -6,11 +6,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${systemConfig['lovej.site.name']}-${title}</title>
+<title>${title} | ${systemConfig['lovej.site.name']}</title>
 <#-- CSS -->
 <link href="${rc.contextPath}/styles/admin/css/transdmin.css" rel="stylesheet" type="text/css" media="screen" />
-<#--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="${rc.contextPath}/styles/admin/css/ie6.css" /><![endif]-->
-<#--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="${rc.contextPath}/styles/admin/css/ie7.css" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="${rc.contextPath}/styles/admin/css/ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="${rc.contextPath}/styles/admin/css/ie7.css" /><![endif]-->
 <link rel="shortcut icon" type="image/x-icon" href="${rc.contextPath}/styles/admin/images/favicon.ico" />
 <script src="${rc.contextPath}/styles/admin/js/jquery1.7-min.js" type="text/javascript"></script>
 

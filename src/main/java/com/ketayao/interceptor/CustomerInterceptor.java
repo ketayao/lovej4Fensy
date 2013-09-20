@@ -29,7 +29,7 @@ public class CustomerInterceptor extends InterceptorAdapter {
 			throws Exception {
 		User user = User.getLoginUser(rc);
 		
-		String url = rc.getRequestURIAndExcludeContextPath();
+		String url = rc.getURIAndExcludeContextPath();
 		if (url.startsWith("/admin") && !url.startsWith("/admin/login")) {
 			if (user == null || user.getRole() < IUser.ROLE_TOP) {
 				rc.error(403);
@@ -37,12 +37,11 @@ public class CustomerInterceptor extends InterceptorAdapter {
 			}
 		}
 		
-		Object[] pObjects = (Object[])handler;
-		Method methodOfAction = (Method)pObjects[1];
+		Method methodOfAction = (Method)handler;
 		if (methodOfAction.isAnnotationPresent(BlogAnnotation.UserRoleRequired.class)) {
 			User loginUser = User.getLoginUser(rc); 
 			if (loginUser == null) {
-				//String this_page = rc.param(THIS_PAGE, "");
+				//String this_page = rc.getParam(THIS_PAGE, "");
 				//throw rc.error(code, msg);
 				//.error("user_not_login", this_page);
 				throw new ActionException("user not login");
@@ -58,11 +57,11 @@ public class CustomerInterceptor extends InterceptorAdapter {
 			}
 		}
 		
-		Locale locale = rc.locale();
+		Locale locale = rc.getLocale();
 		ResourceBundle resourceBundle = ResourceUtils.getResourceBundle(locale, "messages");
 		ResourceBundleModel rsbm = new ResourceBundleModel(resourceBundle, new BeansWrapper());
 		rc.setRequestAttr("bundle", rsbm);
-		rc.setRequestAttr("rc", rc.request());
+		rc.setRequestAttr("rc", rc);
 		
 		rc.setRequestAttr(Constants.LOGIN_USER, user);
 		return true;

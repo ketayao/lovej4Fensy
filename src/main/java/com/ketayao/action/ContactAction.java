@@ -15,7 +15,6 @@ package com.ketayao.action;
 
 import java.sql.Timestamp;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ketayao.fensy.mvc.RequestContext;
@@ -47,22 +46,22 @@ public class ContactAction extends AbstractAction {
 	}
 
 	public String c(RequestContext rc) throws Exception {
-		boolean correct = ImageCaptchaService.validate(rc.request());
+		boolean correct = ImageCaptchaService.validate(rc.getRequest());
 		if (!correct) {
 			rc.setRequestAttr("exception", "验证码错误");
 			return PAGE_500;
 		}
 		
-		if (StringUtils.isEmpty(rc.param("content")) && ((String)rc.param("content")).length() > 500) {
+		if (StringUtils.isEmpty(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 500) {
 			rc.setRequestAttr("exception", "留言内容不能为空，并且字数不能超过500个");
 			return PAGE_500;
 		}
 		
 		if (correct) {
 			Contact contact = new Contact(); 
-			BeanUtils.populate(contact, rc.getParameterMap());
+			rc.populate(contact);
 			contact.setPostTime(new Timestamp(System.currentTimeMillis()));
-			contact.setPostIP(rc.ip());
+			contact.setPostIP(rc.getIp());
 			
 			contact.save();
 			

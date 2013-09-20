@@ -219,7 +219,7 @@ public class EmailExceptionHandler extends ExceptionHandler {
 			
 			@Override
 			public void run() {
-				reportError(rc.request(), exception);
+				reportError(rc.getRequest(), exception);
 			}
 		});
 		thread.start();
