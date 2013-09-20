@@ -36,19 +36,19 @@ public class CategoryAction {
 	
 	public String read(RequestContext rc) {
 		List<Category> parents = Category.INSTANCE.findTree(false);
-		rc.request().setAttribute("parents", parents);
+		rc.getRequest().setAttribute("parents", parents);
 		return READ;
 	}
 	
 	public String preCreate(RequestContext rc) {
 		List<Category> parents = Category.INSTANCE.findParent(false);
-		rc.request().setAttribute("parents", parents);
+		rc.getRequest().setAttribute("parents", parents);
 		return CREATE;
 	}
 	
 	public String create(RequestContext rc) throws Exception {
 		Category category = new Category();
-		BeanUtils.populate(category, rc.request().getParameterMap());
+		BeanUtils.populate(category, rc.getRequest().getParameterMap());
 		
 		// 避免页面目录传递父id
 		if (category.getType().equals(Category.Type.PAGE)) {
@@ -58,7 +58,7 @@ public class CategoryAction {
 		category.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		category.save();
 		
-		rc.request().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
+		rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
 		return preCreate(rc);
 	}
 	
@@ -72,7 +72,7 @@ public class CategoryAction {
 	
 	public String view(RequestContext rc, String[] args) {
 		Category category = Category.INSTANCE.get(NumberUtils.toLong(args[0]));
-		rc.request().setAttribute("category", category);
+		rc.getRequest().setAttribute("category", category);
 		return VIEW;
 	}
 	
@@ -82,13 +82,13 @@ public class CategoryAction {
 	}
 	
 	public String update(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
-		Category category = Category.INSTANCE.get(rc.id());
-		BeanUtils.populate(category, rc.request().getParameterMap());
+		Category category = Category.INSTANCE.get(rc.getId());
+		BeanUtils.populate(category, rc.getRequest().getParameterMap());
 		
 		category.updateAttrs(new String[]{"name", "priority", "description"}, 
 				new Object[]{category.getName(), category.getPriority(), category.getDescription()});
-		rc.request().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
-		rc.request().setAttribute("category", category);
+		rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
+		rc.getRequest().setAttribute("category", category);
 		return UPDATE;
 	}
 }

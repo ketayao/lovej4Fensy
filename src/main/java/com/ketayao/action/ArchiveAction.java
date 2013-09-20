@@ -82,7 +82,7 @@ public class ArchiveAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/archive/expages/" + category.getId() + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/archive/expages/" + category.getId() + "/");
 		
 		List<Category> categories = Category.INSTANCE.findTree(false);
 		
@@ -106,7 +106,7 @@ public class ArchiveAction extends AbstractAction {
 					
 					//rc.setRequestAttr("category", category);
 					//rc.setRequestAttr("article", article);
-					return "redirect:" + rc.contextPath() + "/view/" + article.getId();
+					return "redirect:" + rc.getContextPath() + "/view/" + article.getId();
 				}
 				break;
 			}
@@ -129,20 +129,20 @@ public class ArchiveAction extends AbstractAction {
 	 * @throws Exception
 	 */
 	public String search(RequestContext rc, String[] p) throws Exception {
-		String s = rc.param("s");
+		String s = rc.getParam("s");
 		if (StringUtils.isNotBlank(s)) {
 			//s = new String(s.getBytes("iso-8859-1"), "utf-8");
 		}
 		
 		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(NumberUtils.toInt(rc.param("p"), 1));
-		pageInfo.setUrl(rc.contextPath() + "/archive/search?s=" + s + "&p=");
+		pageInfo.setPageIndex(NumberUtils.toInt(rc.getParam("p"), 1));
+		pageInfo.setUrl(rc.getContextPath() + "/archive/search?s=" + s + "&p=");
 				
 		List<Article> articles = Article.INSTANCE.search(s, pageInfo);
 		
 		rc.setRequestAttr("pageInfo", pageInfo);
 		rc.setRequestAttr("articles", articles);
-		rc.setRequestAttr("who", rc.param("s") + "的搜索结果");
+		rc.setRequestAttr("who", rc.getParam("s") + "的搜索结果");
 		
 		referenceData(rc);
 		return READ;
@@ -158,14 +158,14 @@ public class ArchiveAction extends AbstractAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public String searchText(RequestContext rc, String[] p) throws Exception {
-		String s = rc.param("s");
+		String s = rc.getParam("s");
 		if (StringUtils.isNotBlank(s)) {
 			//s = new String(s.getBytes("iso-8859-1"), "utf-8");
 		}
 
 		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(NumberUtils.toInt(rc.param("p"), 1));
-		pageInfo.setUrl(rc.contextPath() + "/archive/searchText?s=" + s + "&p=");
+		pageInfo.setPageIndex(NumberUtils.toInt(rc.getParam("p"), 1));
+		pageInfo.setUrl(rc.getContextPath() + "/archive/searchText?s=" + s + "&p=");
 		
 		String q = "title:" + s + " OR content:" + s;
 		Query query = SearchHelper.makeQuery("title", q, 1.0f);
@@ -191,7 +191,7 @@ public class ArchiveAction extends AbstractAction {
 		
 		rc.setRequestAttr("pageInfo", pageInfo);
 		rc.setRequestAttr("articles", list);
-		rc.setRequestAttr("who", rc.param("s") + "的搜索结果");
+		rc.setRequestAttr("who", rc.getParam("s") + "的搜索结果");
 		
 		referenceData(rc);
 		return READ;
@@ -220,7 +220,7 @@ public class ArchiveAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/archive/category/" + category.getId() + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/archive/category/" + category.getId() + "/");
 		
 		List<Article> articles = Article.INSTANCE.findExtendCategory(category.getId(), pageInfo);
 		
@@ -255,7 +255,7 @@ public class ArchiveAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/archive/user/" + user.getId() + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/archive/user/" + user.getId() + "/");
 		
 		List<Article> articles = Article.INSTANCE.findByUserId(user.getId(), pageInfo);
 		
@@ -289,7 +289,7 @@ public class ArchiveAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/archive/tag/" + tag.getId() + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/archive/tag/" + tag.getId() + "/");
 		
 		List<Article> articles = Article.INSTANCE.findByTagId(tag.getId(), pageInfo);
 		
@@ -326,7 +326,7 @@ public class ArchiveAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/archive/month/" + p[0] + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/archive/month/" + p[0] + "/");
 		
 		List<Article> articles = Article.INSTANCE.findByMonth(new Timestamp(date.getTime()), pageInfo);
 		

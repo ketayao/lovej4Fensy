@@ -27,7 +27,7 @@ public class ContactAction {
 
 	public String r(RequestContext rc) {
 		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(rc.param("pageIndex", 1));
+		pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
 		
 		List<Contact> contacts = Contact.INSTANCE.findPage(pageInfo, false);
 		pageInfo.setUrl("readContact?pageIndex=");
@@ -38,18 +38,18 @@ public class ContactAction {
 	}
 	
 	public String u(RequestContext rc) {
-		Contact contact = Contact.INSTANCE.get(rc.id());
-		contact.setStatus(rc.param("status", Contact.Status.NEW));
+		Contact contact = Contact.INSTANCE.get(rc.getId());
+		contact.setStatus(rc.getParam("status", Contact.Status.NEW));
 		
 		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(rc.param("pageIndex", 1));
+		pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
 		
 		contact.updateAttr("status", contact.getStatus());
 		return r(rc);
 	}
 
 	public String d(RequestContext rc) {
-		Contact contact = Contact.INSTANCE.get(rc.id());
+		Contact contact = Contact.INSTANCE.get(rc.getId());
 		contact.delete();
 		
 		return r(rc);

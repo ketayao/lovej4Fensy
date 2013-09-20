@@ -38,18 +38,18 @@ public class ErrorAction extends AbstractAction {
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected String process(RequestContext rc, String[] p) throws Exception {
-		Integer statusCode = (Integer) rc.request().getAttribute("javax.servlet.error.status_code");
+		Integer statusCode = (Integer) rc.getRequest().getAttribute("javax.servlet.error.status_code");
 		if (statusCode == null) {
 			return PAGE_404;
 		}
-		String message = (String) rc.request().getAttribute("javax.servlet.error.message");
-		String servletName = (String) rc.request().getAttribute("javax.servlet.error.servlet_name");
-		String uri = (String) rc.request().getAttribute("javax.servlet.error.request_uri");
-		Throwable t = (Throwable) rc.request().getAttribute("javax.servlet.error.exception");
-		Class exception = (Class) rc.request().getAttribute("javax.servlet.error.exception_type");
+		String message = (String) rc.getRequest().getAttribute("javax.servlet.error.message");
+		String servletName = (String) rc.getRequest().getAttribute("javax.servlet.error.servlet_name");
+		String uri = (String) rc.getRequest().getAttribute("javax.servlet.error.request_uri");
+		Throwable t = (Throwable) rc.getRequest().getAttribute("javax.servlet.error.exception");
+		Class exception = (Class) rc.getRequest().getAttribute("javax.servlet.error.exception_type");
 		
 		if(statusCode == 500) {
-			String queryString = rc.request().getQueryString();
+			String queryString = rc.getRequest().getQueryString();
 			String url = uri + (queryString == null || queryString.length() == 0 ? "" : "?" + queryString);
 			url = url.replaceAll("&amp;", "&").replaceAll("&", "&amp;");
 			

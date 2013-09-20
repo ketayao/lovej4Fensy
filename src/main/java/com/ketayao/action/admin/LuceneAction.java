@@ -34,9 +34,9 @@ public class LuceneAction {
 	}
 	
 	public String rebuilder(RequestContext rc) throws Exception {
-		String s = rc.param("-s", "200");
-		String p = rc.param("-p", SystemConfig.getConfig().get("blog.lucene.path"));
-		String b = rc.param("-b", Article.class.getName());
+		String s = rc.getParam("-s", "200");
+		String p = rc.getParam("-p", SystemConfig.getConfig().get("blog.lucene.path"));
+		String b = rc.getParam("-b", Article.class.getName());
 		
 		long start = System.currentTimeMillis();
 		IndexRebuilder.execute(new String[]{

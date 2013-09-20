@@ -5,6 +5,7 @@
  */
 package com.ketayao.test.jetty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class JettyFactory {
 	 */
 	public static void setTldJarNames(Server server, String... jarNames) {
 		WebAppContext context = (WebAppContext) server.getHandler();
-		List<String> jarNameExprssions = Arrays.asList(".*/jstl-[^/]*\\.jar$", ".*/.*taglibs[^/]*\\.jar$");
+		List<String> jarNameExprssions = new ArrayList<String>(Arrays.asList(".*/jstl-[^/]*\\.jar$", ".*/.*taglibs[^/]*\\.jar$"));
 		for (String jarName : jarNames) {
 			jarNameExprssions.add(".*/" + jarName + "-[^/]*\\.jar$");
 		}

@@ -26,16 +26,16 @@ public class FileAction {
 	private static final long MAX_IMG_SIZE = 1 * 1024 * 1024;
 
 	public void upload(RequestContext rc) throws IOException {
-		File imgFile = rc.image("imgFile");
+		File imgFile = rc.getImage("imgFile");
 		if (imgFile.length() > MAX_IMG_SIZE) {
-			rc.output_json(new String[] { "error", "message" }, new Object[] {
+			rc.printJson(new String[] { "error", "message" }, new Object[] {
 					1, "File is too large" });
 			return;
 		}
 		
 		StorageService ss = StorageService.IMAGE;
 		String path = ss.save(imgFile);
-		String url = rc.contextPath() + "/" + ss.getReadPath() + path;
-		rc.output_json(new String[] { "error", "url" }, new Object[] {0, url});
+		String url = rc.getContextPath() + "/" + ss.getReadPath() + path;
+		rc.printJson(new String[] { "error", "url" }, new Object[] {0, url});
 	}
 }

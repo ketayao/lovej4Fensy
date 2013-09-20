@@ -32,7 +32,7 @@ public class UserAction {
 	
 //	public void register(RequestContext rc) throws Exception {
 //		User user = new User();
-//		BeanUtils.populate(user, rc.request().getParameterMap());
+//		BeanUtils.populate(user, rc.getRequest().getParameterMap());
 //
 //		user.setNickname(user.getUsername());
 //		user.setRole(IUser.ROLE_TOP);
@@ -48,7 +48,7 @@ public class UserAction {
 	 * @throws IOException
 	 */
 	public void checkUser(RequestContext rc) throws IOException {
-		User user = User.INSTANCE.getByAttr("username", rc.param("username"));
+		User user = User.INSTANCE.getByAttr("username", rc.getParam("username"));
 		if (user == null) {
 			rc.print("true");
 		} else {
@@ -60,13 +60,13 @@ public class UserAction {
 		User user = User.getLoginUser(rc);
 		
 		user.updateAttrs(new String[] { "nickname", "email", "frozen", "role"}, 
-				new Object[] {rc.param("nickname"), rc.param("email"), (byte)rc.param("frozen", 0), (byte)rc.param("role", 0)});
-		user.setNickname(rc.param("nickname"));
-		user.setEmail(rc.param("email"));
-		user.setFrozen((byte)rc.param("frozen", 0));
-		user.setRole((byte)rc.param("role", 0));
+				new Object[] {rc.getParam("nickname"), rc.getParam("email"), (byte)rc.getParam("frozen", 0), (byte)rc.getParam("role", 0)});
+		user.setNickname(rc.getParam("nickname"));
+		user.setEmail(rc.getParam("email"));
+		user.setFrozen((byte)rc.getParam("frozen", 0));
+		user.setRole((byte)rc.getParam("role", 0));
 				
-		return "redirect:" + rc.contextPath() + "/admin/user?success=true";
+		return "redirect:" + rc.getContextPath() + "/admin/user?success=true";
 	}
 	
 	public String pwd() {
@@ -76,8 +76,8 @@ public class UserAction {
 	public String modifyPwd(RequestContext rc) throws Exception {
 		User user = User.getLoginUser(rc);
 		
-		String oldPassword = rc.param("oldPassword");
-		String newPassword = rc.param("newPassword");
+		String oldPassword = rc.getParam("oldPassword");
+		String newPassword = rc.getParam("newPassword");
 		
 		if (user.getPassword().equals(CryptUtils.encrypt(oldPassword, user.getSalt()))) {
 			String pwd = CryptUtils.encrypt(newPassword, user.getSalt());
@@ -86,9 +86,9 @@ public class UserAction {
 			
 			rc.saveUserInCookie(user, false);
 			
-			return "redirect:" + rc.contextPath() + "/admin/user/pwd?success=true";
+			return "redirect:" + rc.getContextPath() + "/admin/user/pwd?success=true";
 		} else {
-			return "redirect:" + rc.contextPath() + "/admin/user/pwd?success=false";
+			return "redirect:" + rc.getContextPath() + "/admin/user/pwd?success=false";
 		}
 	}
 	

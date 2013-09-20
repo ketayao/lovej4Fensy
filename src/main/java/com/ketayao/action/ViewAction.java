@@ -64,7 +64,7 @@ public class ViewAction extends AbstractAction {
 		if (p.length > 1) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[1], 1));
 		}
-		pageInfo.setUrl(rc.contextPath() + "/view/" + article.getId() + "/");
+		pageInfo.setUrl(rc.getContextPath() + "/view/" + article.getId() + "/");
 		
 		rc.setRequestAttr("comments", Comment.INSTANCE.findNoParent(article.getId(), pageInfo));
 		
@@ -88,7 +88,7 @@ public class ViewAction extends AbstractAction {
 			return comment;
 		}
 		
-		Cookie cookie = rc.cookie(Constants.COMMENT_USER);
+		Cookie cookie = rc.getCookie(Constants.COMMENT_USER);
 		if (cookie != null) {
 			String cookieValue = RequestContext._decrypt(cookie.getValue());
 			comment.setName(StringUtils.substringBefore(cookieValue, "|"));

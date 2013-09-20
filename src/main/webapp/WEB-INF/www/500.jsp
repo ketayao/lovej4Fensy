@@ -149,10 +149,10 @@
 			</style>
 </head>
 <body id="error-page">
-	<p><strong>错误</strong>：
+	<p><strong>错误</strong>：SORRY，系统出了一点点故障，我会尽快解决！！！
 	<% 
 		if (ex != null) {
-			out.print(ex.getMessage());
+			//out.print(ex.getMessage());
 		}
 	%>
 	。</p>

@@ -24,15 +24,14 @@ import com.ketayao.pojo.User;
  */
 public class LoginAction {
 	private static final String LOGIN = "admin/login";
-	private static final String INDEX = "admin/index";
 	
 	public String index() {
 		return LOGIN;
 	}
 	
 	public String login(RequestContext rc) throws Exception {
-		String username = rc.param("username");
-		String password = rc.param("password");
+		String username = rc.getParam("username");
+		String password = rc.getParam("password");
 		
 		User user = User.INSTANCE.getByAttr("username", username);
 		if (user == null) {
@@ -52,16 +51,15 @@ public class LoginAction {
 		}
 
 		rc.saveUserInCookie(user, false);
-		//rc.session(true).setAttribute(Constants.LOGIN_USER, user);
-		return INDEX;
+		return "redirect:" + rc.getContextPath() + "/admin/index";
 	}
 	
 	public String logout(RequestContext rc) throws Exception {
-		HttpSession session = rc.session(false);
+		HttpSession session = rc.getSession(false);
 		if (session != null) {
 			session.invalidate();
 		}
-		rc.deleteUserInCookie();
-		return "redirect:" + rc.contextPath() + "/admin/login"; 
+		rc.deleteUserFromCookie();
+		return "redirect:" + rc.getContextPath() + "/admin/login"; 
 	}
 }

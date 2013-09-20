@@ -47,17 +47,17 @@ public class AttachAction {
 			attach.delete();
 		}
 		
-		String view = "redirect:" + rc.contextPath() + "/admin/article/preUpdate?id=" 
-				+ rc.param("id") + "&categoryId=" + rc.param("categoryId") 
-				+ "&pageIndex=" + rc.param("pageIndex");
+		String view = "redirect:" + rc.getContextPath() + "/admin/article/preUpdate?id=" 
+				+ rc.getParam("id") + "&categoryId=" + rc.getParam("categoryId") 
+				+ "&pageIndex=" + rc.getParam("pageIndex");
 		
 		return view;
 	}
 	
 	public String upload(RequestContext rc) throws UnsupportedEncodingException {
-		String view = "redirect:" + rc.contextPath() + "/admin/article/preUpdate?id=" 
-						+ rc.param("id") + "&categoryId=" + rc.param("categoryId") 
-						+ "&pageIndex=" + rc.param("pageIndex") + "&message=";
+		String view = "redirect:" + rc.getContextPath() + "/admin/article/preUpdate?id=" 
+						+ rc.getParam("id") + "&categoryId=" + rc.getParam("categoryId") 
+						+ "&pageIndex=" + rc.getParam("pageIndex") + "&message=";
 		
 		//  返回信息
 		String message = "";
@@ -72,7 +72,7 @@ public class AttachAction {
 		String fn = "";
 		try {
 			// 检查文件大小
-			File file = rc.file("file");
+			File file = rc.getFile("file");
 			
 			if (file == null || file.length() > maxSize) {
 				message = "上传文件大小超过限制。";
@@ -94,10 +94,10 @@ public class AttachAction {
 			String path = ss.save(file);
 			Attach attach = new Attach();
 			
-			Article article = Article.INSTANCE.get(rc.id());
+			Article article = Article.INSTANCE.get(rc.getId());
 			attach.setArticleId(article.getId());
-			if (StringUtils.isNotBlank(rc.param("description"))) {
-				attach.setDescription(rc.param("description") + "." + fileExt);
+			if (StringUtils.isNotBlank(rc.getParam("description"))) {
+				attach.setDescription(rc.getParam("description") + "." + fileExt);
 			} else {
 				attach.setDescription(baseName + "." + fileExt);
 			}

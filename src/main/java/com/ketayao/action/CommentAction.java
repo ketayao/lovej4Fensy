@@ -16,7 +16,6 @@ package com.ketayao.action;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jsoup.Jsoup;
@@ -47,26 +46,26 @@ public class CommentAction extends AbstractAction {
 	 */
 	@Override
 	protected String process(RequestContext rc, String[] p) throws IllegalAccessException, InvocationTargetException {
-		boolean correct = ImageCaptchaService.validate(rc.request());
+		boolean correct = ImageCaptchaService.validate(rc.getRequest());
 		if (!correct) {
 			rc.setRequestAttr("exception", "验证码错误");
 			return PAGE_500;
 		}
 		
-		if (StringUtils.isEmpty(rc.param("content")) && ((String)rc.param("content")).length() > 250) {
+		if (StringUtils.isEmpty(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 250) {
 			rc.setRequestAttr("exception", "评论内容不能为空，并且字数不能超过250个");
 			return PAGE_500;
 		}
 		
 		Comment comment = new Comment();
-		BeanUtils.populate(comment, rc.getParameterMap());
+		rc.populate(comment);
 		
 		if (comment.getParentId() != null && comment.getParentId().longValue() == 0) {
 			comment.setParentId(null);
 		}
 		
 		comment.setPostTime(new Timestamp(System.currentTimeMillis()));
-		comment.setPostIP(rc.ip());
+		comment.setPostIP(rc.getIp());
 		
 		IUser iUser = rc.getUserFromCookie();
 		if (iUser != null && iUser.getId() == comment.getArticle().getUserId()) {
@@ -84,7 +83,7 @@ public class CommentAction extends AbstractAction {
 			pageIndex = NumberUtils.toInt(p[0], 1) + 1;//加一，超过最大页数，默认为最后一页
 		}
 		
-		return "redirect:" + rc.contextPath() + "/view/" + comment.getArticleId() + "/" + pageIndex + "#comments";
+		return "redirect:" + rc.getContextPath() + "/view/" + comment.getArticleId() + "/" + pageIndex + "#comments";
 	}
 	
 	private void saveCommentUserInCookie(RequestContext rc, Comment comment) {
@@ -95,7 +94,7 @@ public class CommentAction extends AbstractAction {
 		sb.append('|');
 		sb.append(comment.getSite());
 		String uuid = RequestContext._encrypt(sb.toString());
-		rc.cookie(Constants.COMMENT_USER, uuid, RequestContext.MAX_AGE, true);
+		rc.setCookie(Constants.COMMENT_USER, uuid, RequestContext.MAX_AGE, true);
 	}
 	
 }

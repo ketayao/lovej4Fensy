@@ -42,7 +42,7 @@ public class DownloadAction {
 			return;
 		}
 		
-		String file = rc.param("file");
+		String file = rc.getParam("file");
 		if (StringUtils.isNotBlank(file)) {
 			Attach attach = Attach.INSTANCE.getByAttr("url", file);
 			if (attach != null) {
@@ -53,8 +53,8 @@ public class DownloadAction {
 				try {
 					input = new FileInputStream(filePath);
 					
-					ServletUtils.setFileDownloadHeader(rc.request(), rc.response(), attach.getDescription());
-					IOUtils.copy(input, rc.response().getOutputStream());
+					ServletUtils.setFileDownloadHeader(rc.getRequest(), rc.getResponse(), attach.getDescription());
+					IOUtils.copy(input, rc.getResponse().getOutputStream());
 					
 					attach.setDownload(attach.getDownload() + 1);
 					attach.updateAttr("download", attach.getDownload());
