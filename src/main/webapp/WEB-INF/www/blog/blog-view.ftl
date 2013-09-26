@@ -46,7 +46,10 @@
 		<a href="${rc.contextPath}/archive/tag/${at.tag.id}" rel="tag">${at.tag.title}</a><#if (item_has_next)>、</#if>
 	</#list>标签
 	</#if>。
-	<span class="">作者是<span class="author vcard"><a class="url fn n" href="${rc.contextPath}/archive/user/${article.user.id}" title="查看所有由${article.user.nickname}发布的文章" rel="author">${article.user.nickname}</a></span>。</span> 
+	<span class="">作者是<span class="author vcard"><a class="url fn n" href="${rc.contextPath}/archive/user/${article.user.id}" title="查看所有由${article.user.nickname}发布的文章" rel="author">${article.user.nickname}</a></span>。</span>
+	<#if user.id == article.userId>
+		<a class="url" href="${rc.contextPath}/admin/article/preUpdate?id=${article.id}">修改此条目</a>
+	</#if> 
 	</footer>
   <!-- .entry-meta --> 
 </article>
@@ -108,7 +111,7 @@
 				</#if>
 					<a href="${rc.contextPath}/view/${article.id}/${cp.pageIndex}#comment-${c.id}"><time datetime="${c.postTime}">${c.postTime?string('yyyy 年 MM 月 dd 日')} ${c.postTime?time?string.short}</time></a>
 				<#if (!c.children?? || c.children?size lt 1) && (user.id == article.userId)>		
-					<a class="url" href="${rc.contextPath}/admin/comment/d/${c.id}"><time>删除此评论</time></a>
+					<a class="url" href="${rc.contextPath}/admin/comment/d/${c.id}" style="text-decoration:underline;"><time>删除此评论</time></a>
 				</#if>
 			</header><!-- .comment-meta -->
 			<section class="comment-content comment">

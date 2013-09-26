@@ -22,7 +22,7 @@
 					</#if>
 						<a href="${rc.contextPath}/view/${article.id}/${cp.pageIndex}#comment-${c.id}"><time datetime="${c.postTime}">${c.postTime?string('yyyy 年 MM 月 dd 日')} ${c.postTime?time?string.short}</time></a>
 					<#if (!c.children?? || c.children?size lt 1) && (user.id == article.userId)>		
-						<a class="url" href="${rc.contextPath}/admin/comment/d/${c.id}"><time>删除此评论</time></a>
+						<a class="url" href="${rc.contextPath}/admin/comment/d/${c.id}" style="text-decoration:underline;"><time>删除此评论</time></a>
 					</#if>	
 				</header><!-- .comment-meta -->
 				<section class="comment-content comment">
