@@ -229,7 +229,11 @@ span.highlight {
 var mv_dynamic_to_top = {"text":"0","version":"0","min":"200","speed":"1000","easing":"easeInOutExpo","margin":"20"};
 /* ]]> */
 </script> 
-<script type="text/javascript" src="${rc.contextPath}/styles/blog/js/dynamic.js"></script><a style="display: none;" href="#" id="dynamic-to-top"><span>&nbsp;</span></a> 
+<script type="text/javascript" src="${rc.contextPath}/styles/blog/js/dynamic.js"></script><a style="display: none;" href="#" id="dynamic-to-top"><span>&nbsp;</span></a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff8137cdb1aaa1d376fb2422389fcca49' type='text/javascript'%3E%3C/script%3E"));
+</script>
 </body>
 </html>
 </#macro>

@@ -12,6 +12,7 @@ package com.ketayao.action.admin;
 
 import javax.servlet.http.HttpSession;
 
+import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.RequestContext;
 import com.ketayao.fensy.util.CryptUtils;
 import com.ketayao.pojo.User;
@@ -25,7 +26,12 @@ import com.ketayao.pojo.User;
 public class LoginAction {
 	private static final String LOGIN = "admin/login";
 	
-	public String index() {
+	public String index(RequestContext rc) {
+		User user = User.getLoginUser(rc);
+		if (user != null && user.getRole() >= IUser.ROLE_TOP) {
+			return "redirect:" + rc.getContextPath() + "/admin/index"; 
+		}
+		
 		return LOGIN;
 	}
 	

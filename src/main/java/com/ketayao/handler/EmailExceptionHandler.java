@@ -81,6 +81,7 @@ public class EmailExceptionHandler extends ExceptionHandler {
 					SystemConfig.getConfig().get("blog.exception.email.password"));
 			email.setFrom(SystemConfig.getConfig().get("blog.exception.email.name"));
 
+			email.setCharset("utf-8");// 解决中文乱码
 			email.addTo(address);
 			
 			email.setSubject(title);
