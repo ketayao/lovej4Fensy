@@ -129,12 +129,12 @@ public class ArticleTag extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<ArticleTag> find(long articleId) {
-		List<Long> ids = ids(ARTICLEIDS, articleId);
+		List<Long> ids = getIds(ARTICLEIDS, articleId);
 		return (List<ArticleTag>)loadList(ids);
 	}
 	
 	public List<Long> findByTagId(long tagId) {
-		List<Long> articleIds = otherIds("articleId", BY_TAGID, tagId);
+		List<Long> articleIds = getKeys("articleId", BY_TAGID, tagId);
 		return articleIds;
 	}
 }

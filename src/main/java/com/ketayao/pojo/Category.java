@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.BooleanUtils;
 
-import com.ketayao.fensy.cache.CacheManager;
 import com.ketayao.fensy.db.POJO;
 
 /** 
@@ -240,8 +239,8 @@ public class Category extends POJO {
 	public boolean delete() {
 		boolean result = updateAttr("trash", 1);
 		if (result) {
-			evict(true);
-			CacheManager.evict(cacheRegion(), OBJ_COUNT_CACHE_KEY);
+			evictCache(true);
+			evictCache(OBJ_COUNT_CACHE_KEY);
 			evictQueryCache();
 		}
 		
@@ -308,7 +307,7 @@ public class Category extends POJO {
 		list = (List<Category>)this.list("parentId IS NULL AND trash=" + BooleanUtils.toInteger(trash));
 		Collections.sort(list, new CategorySort());
 		
-		setCache(key, (Serializable)list);
+		putCache(key, (Serializable)list);
 		return list;
 	}
 	
@@ -322,7 +321,7 @@ public class Category extends POJO {
 		list = (List<Category>)this.list("parentId IS NULL AND trash=" + trash);
 		Collections.sort(list, new CategorySort());
 		
-		setCache(key, (Serializable)list);
+		putCache(key, (Serializable)list);
 		return list;
 	}
 	
@@ -361,7 +360,7 @@ public class Category extends POJO {
 		}
 		Collections.sort(parents, new CategorySort());
 
-		setCache(key, (Serializable)parents);
+		putCache(key, (Serializable)parents);
 		return parents;
 	}
 	

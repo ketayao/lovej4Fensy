@@ -88,7 +88,7 @@ public class Tag extends POJO {
 		}
 		
 		tags = (List<Tag>)list();
-		setCache(queryCacheListKey, (Serializable)tags);
+		putCache(queryCacheListKey, (Serializable)tags);
 		return tags; 
 	}
 	

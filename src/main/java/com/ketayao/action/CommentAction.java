@@ -22,7 +22,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 import com.ketayao.fensy.mvc.IUser;
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.ImageCaptchaService;
 import com.ketayao.pojo.Article;
 import com.ketayao.pojo.Comment;
@@ -44,10 +44,10 @@ public class CommentAction extends AbstractAction {
 	 * @param p
 	 * @return  
 	 * @throws Exception 
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@Override
-	protected String process(RequestContext rc, String[] p) throws Exception {
+	protected String process(WebContext rc, String[] p) throws Exception {
 		boolean correct = ImageCaptchaService.validate(rc.getRequest());
 		if (!correct) {
 			rc.setRequestAttr("exception", "验证码错误");
@@ -92,18 +92,18 @@ public class CommentAction extends AbstractAction {
 		return "redirect:" + rc.getContextPath() + view;
 	}
 	
-	private void saveCommentUserInCookie(RequestContext rc, Comment comment) {
+	private void saveCommentUserInCookie(WebContext rc, Comment comment) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(comment.getName());
 		sb.append('|');
 		sb.append(comment.getEmail());
 		sb.append('|');
 		sb.append(comment.getSite());
-		String uuid = RequestContext._encrypt(sb.toString());
-		rc.setCookie(Constants.COMMENT_USER, uuid, RequestContext.MAX_AGE, true);
+		String uuid = WebContext.encrypt(sb.toString());
+		rc.setCookie(Constants.COMMENT_USER, uuid, WebContext.MAX_AGE, true);
 	}
 	
-	private void sendMail(Comment comment, String view, RequestContext rc) throws Exception {
+	private void sendMail(Comment comment, String view, WebContext rc) throws Exception {
 		SiteConfig siteConfig = (SiteConfig)rc.getContext().getAttribute(Constants.SITE_CONFIG);
 		
 		HtmlEmail email = new HtmlEmail();

@@ -137,7 +137,7 @@ public class Attach extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Attach> find(long articleId) {
-		List<Long> ids = ids(ARTICLEIDS, articleId);
+		List<Long> ids = getIds(ARTICLEIDS, articleId);
 		return (List<Attach>)loadList(ids);
 	}
 }

@@ -15,7 +15,7 @@ package com.ketayao.action;
 
 import java.io.IOException;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.ImageCaptchaService;
 
 /** 
@@ -26,7 +26,7 @@ import com.ketayao.fensy.webutil.ImageCaptchaService;
  */
 
 public class ImageCaptchaAction {
-	public void index(RequestContext rc) throws IOException {
+	public void index(WebContext rc) throws IOException {
 		ImageCaptchaService.get(rc);
 	}
 }

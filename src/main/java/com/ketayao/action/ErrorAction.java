@@ -16,7 +16,7 @@ package com.ketayao.action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 
 /** 
  * 	
@@ -33,14 +33,14 @@ public class ErrorAction extends AbstractAction {
 	 * @param p
 	 * @return
 	 * @throws Exception  
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
-	protected String process(RequestContext rc, String[] p) throws Exception {
+	protected String process(WebContext rc, String[] p) throws Exception {
 		Integer statusCode = (Integer) rc.getRequest().getAttribute("javax.servlet.error.status_code");
 		if (statusCode == null) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		String message = (String) rc.getRequest().getAttribute("javax.servlet.error.message");
 		String servletName = (String) rc.getRequest().getAttribute("javax.servlet.error.servlet_name");
@@ -57,10 +57,10 @@ public class ErrorAction extends AbstractAction {
 		    rc.setRequestAttr("exception", message);
 		}
 		else if(statusCode == 404) {
-			return PAGE_404;  
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;  
 		}
 		
-		return PAGE_500;
+		return "redirect:" + rc.getContextPath() + "/" + PAGE_500;
 	}
 
 }

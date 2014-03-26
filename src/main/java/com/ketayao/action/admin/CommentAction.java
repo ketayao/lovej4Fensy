@@ -13,7 +13,7 @@
  
 package com.ketayao.action.admin;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Comment;
 
 /** 
@@ -24,7 +24,7 @@ import com.ketayao.pojo.Comment;
  */
 
 public class CommentAction {
-	public String d(RequestContext rc, long id) {
+	public String d(WebContext rc, long id) {
 		Comment comment = Comment.INSTANCE.get(id);
 		comment.delete();
 		

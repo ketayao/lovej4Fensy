@@ -29,7 +29,7 @@ import org.apache.lucene.search.SortField;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.pojo.Category;
 import com.ketayao.pojo.Tag;
@@ -52,11 +52,11 @@ public class ArchiveAction extends AbstractAction {
 	 * @param p
 	 * @return
 	 * @throws Exception  
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@Override
-	protected String process(RequestContext rc, String[] p) throws Exception {
-		return PAGE_404;
+	protected String process(WebContext rc, String[] p) throws Exception {
+		return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 	}
 	
 	/**
@@ -67,15 +67,15 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String expages(RequestContext rc, String[] p) throws Exception {
+	public String expages(WebContext rc, String[] p) throws Exception {
 		if (p == null || p.length < 1) {
-			return "redirect:" +PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		Category category = Category.INSTANCE.get(NumberUtils.toLong(p[0], 0));
 		
 		if (category == null) {
-			return "redirect:" +PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		PageInfo pageInfo = new PageInfo();
@@ -128,7 +128,7 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String search(RequestContext rc, String[] p) throws Exception {
+	public String search(WebContext rc, String[] p) throws Exception {
 		String s = rc.getParam("s");
 		if (StringUtils.isNotBlank(s)) {
 			//s = new String(s.getBytes("iso-8859-1"), "utf-8");
@@ -157,7 +157,7 @@ public class ArchiveAction extends AbstractAction {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public String searchText(RequestContext rc, String[] p) throws Exception {
+	public String searchText(WebContext rc, String[] p) throws Exception {
 		String s = rc.getParam("s");
 		if (StringUtils.isNotBlank(s)) {
 			//s = new String(s.getBytes("iso-8859-1"), "utf-8");
@@ -205,15 +205,15 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String category(RequestContext rc, String[] p) throws Exception {
+	public String category(WebContext rc, String[] p) throws Exception {
 		if (p == null || p.length < 1) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		Category category = Category.INSTANCE.get(NumberUtils.toLong(p[0], 0));
 		
 		if (category == null) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		PageInfo pageInfo = new PageInfo();
@@ -241,14 +241,14 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String user(RequestContext rc, String[] p) throws Exception {
+	public String user(WebContext rc, String[] p) throws Exception {
 		if (p == null || p.length < 1) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		User user = User.INSTANCE.get(NumberUtils.toLong(p[0], 0));
 		if (user == null) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		PageInfo pageInfo = new PageInfo();
@@ -275,14 +275,14 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String tag(RequestContext rc, String[] p) throws Exception {
+	public String tag(WebContext rc, String[] p) throws Exception {
 		if (p == null || p.length < 1) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		Tag tag = Tag.INSTANCE.get(NumberUtils.toLong(p[0], 0));
 		if (tag == null) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		PageInfo pageInfo = new PageInfo();
@@ -309,9 +309,9 @@ public class ArchiveAction extends AbstractAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String month(RequestContext rc, String[] p) throws Exception {
+	public String month(WebContext rc, String[] p) throws Exception {
 		if (p == null || p.length < 1) {
-			return PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		Date date = null;
@@ -319,7 +319,7 @@ public class ArchiveAction extends AbstractAction {
 			date = DateUtils.parseDate(p[0], "yyyy-MM");
 		} catch (Exception e) {
 			rc.setRequestAttr("exception", p[0] + "日期格式不对");
-			return PAGE_500;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_500;
 		}
 		
 		PageInfo pageInfo = new PageInfo();

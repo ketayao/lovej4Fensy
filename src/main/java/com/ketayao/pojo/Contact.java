@@ -203,7 +203,7 @@ public class Contact extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Contact> findPage(PageInfo pageInfo, Boolean trash) {
-		List<Long> ids = ids(FIND_PAGE, BooleanUtils.toInteger(trash));
+		List<Long> ids = getIds(FIND_PAGE, BooleanUtils.toInteger(trash));
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		

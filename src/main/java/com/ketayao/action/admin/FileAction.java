@@ -13,7 +13,7 @@ package com.ketayao.action.admin;
 import java.io.File;
 import java.io.IOException;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.StorageService;
 
 /** 
@@ -25,7 +25,7 @@ import com.ketayao.fensy.webutil.StorageService;
 public class FileAction {
 	private static final long MAX_IMG_SIZE = 1 * 1024 * 1024;
 
-	public void upload(RequestContext rc) throws IOException {
+	public void upload(WebContext rc) throws IOException {
 		File imgFile = rc.getImage("imgFile");
 		if (imgFile.length() > MAX_IMG_SIZE) {
 			rc.printJson(new String[] { "error", "message" }, new Object[] {

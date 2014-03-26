@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.util.PageInfo;
 
@@ -30,10 +30,10 @@ public class IndexAction extends AbstractAction {
 	 * @param rc
 	 * @param p
 	 * @return  
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@Override
-	protected String process(RequestContext rc, String[] p) {
+	protected String process(WebContext rc, String[] p) {
 		PageInfo pageInfo = new PageInfo();
 		if (p != null && p.length > 0) {
 			pageInfo.setPageIndex(NumberUtils.toInt(p[0], 1));

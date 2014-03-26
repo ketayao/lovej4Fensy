@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.ImageCaptchaService;
 import com.ketayao.pojo.Contact;
 import com.ketayao.system.Constants;
@@ -38,14 +38,14 @@ public class ContactAction extends AbstractAction {
 	 * @param p
 	 * @return
 	 * @throws Exception  
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@Override
-	protected String process(RequestContext rc, String[] p) throws Exception {
+	protected String process(WebContext rc, String[] p) throws Exception {
 		return CREATE;
 	}
 
-	public String c(RequestContext rc) throws Exception {
+	public String c(WebContext rc) throws Exception {
 		boolean correct = ImageCaptchaService.validate(rc.getRequest());
 		if (!correct) {
 			rc.setRequestAttr("exception", "验证码错误");

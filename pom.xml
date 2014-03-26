@@ -15,11 +15,7 @@
   	<dependency>
 		<groupId>com.ketayao</groupId>
 		<artifactId>fensy</artifactId>
-		<version>0.0.1-BETA</version>
-		<!--
-		<scope>system</scope>
-		<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fensy-0.0.1-BETA.jar</systemPath>
-		-->
+		<version>1.0.0</version>
   	</dependency>
   	<dependency>
 		<groupId>com.ketayao</groupId>

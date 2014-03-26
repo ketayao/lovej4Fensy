@@ -24,7 +24,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Track;
 import com.ketayao.pojo.TrackList;
 import com.ketayao.system.Constants;
@@ -43,7 +43,7 @@ public class TrackAction {
 	private final static String PLAY_PATH = "/styles/dewplayer/playlist.xml";
 	
 	@SuppressWarnings("unchecked")
-	public String r(RequestContext rc) throws Exception {		
+	public String r(WebContext rc) throws Exception {		
 		String playlist = rc.getContext().getRealPath("/") + PLAY_PATH;
 		
 		SAXReader saxReader = new SAXReader();
@@ -74,7 +74,7 @@ public class TrackAction {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public String u(RequestContext rc) throws Exception {
+	public String u(WebContext rc) throws Exception {
 		String playlist = rc.getContext().getRealPath("/") + PLAY_PATH;
 		Document document = DocumentHelper.createDocument();
 
