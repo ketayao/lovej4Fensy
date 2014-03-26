@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Link;
 import com.ketayao.system.Constants;
 import com.ketayao.util.PageInfo;
@@ -40,7 +40,7 @@ public class LinkAction {
 		return CREATE;
 	}
 	
-	public String c(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String c(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		Link link = new Link();
 		rc.populate(link);
 		
@@ -63,7 +63,7 @@ public class LinkAction {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	public String r(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String r(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		PageInfo pageInfo = new PageInfo();
 		rc.populate(pageInfo);
 		
@@ -76,14 +76,14 @@ public class LinkAction {
 		return READ;
 	}
 	
-	public String pu(RequestContext rc) {
+	public String pu(WebContext rc) {
 		Link link = Link.INSTANCE.get(rc.getId());
 		rc.setRequestAttr("link", link);
 		rc.setRequestAttr("pageIndex", rc.getParam("pageIndex", 1));
 		return UPDATE;
 	}
 	
-	public String u(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String u(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		Link link = Link.INSTANCE.get(rc.getId());
 		rc.populate(link);
 		
@@ -98,7 +98,7 @@ public class LinkAction {
 		return UPDATE;
 	}
 
-	public String d(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String d(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		Link link = Link.INSTANCE.get(rc.getId());
 		link.delete();
 		

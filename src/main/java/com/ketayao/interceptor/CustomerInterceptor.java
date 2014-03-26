@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import com.ketayao.annotation.BlogAnnotation;
 import com.ketayao.fensy.exception.ActionException;
 import com.ketayao.fensy.mvc.IUser;
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.mvc.interceptor.InterceptorAdapter;
 import com.ketayao.fensy.util.ResourceUtils;
 import com.ketayao.pojo.User;
@@ -25,7 +25,7 @@ import freemarker.ext.beans.ResourceBundleModel;
 public class CustomerInterceptor extends InterceptorAdapter {
 
 	@Override
-	public boolean preHandle(RequestContext rc, Object handler)
+	public boolean preHandle(WebContext rc, Object handler)
 			throws Exception {
 		User user = User.getLoginUser(rc);
 		

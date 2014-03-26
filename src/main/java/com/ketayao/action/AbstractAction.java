@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.pojo.Category;
 import com.ketayao.pojo.Comment;
@@ -43,14 +43,14 @@ public abstract class AbstractAction {
 	protected static final String PAGE_500 = "blog/500";
 	protected static final String READ = "blog/blog-read";
 	
-	public String index(RequestContext rc, String[] p) throws Exception {
+	public String index(WebContext rc, String[] p) throws Exception {
 		referenceData(rc);
 		return process(rc, p); 
 	}
 	
-	protected abstract String process(RequestContext rc, String[] p) throws Exception;
+	protected abstract String process(WebContext rc, String[] p) throws Exception;
 	
-	protected void referenceData(RequestContext rc) throws ParseException {
+	protected void referenceData(WebContext rc) throws ParseException {
 		List<Category> categories = Category.INSTANCE.findTree(false);
 		List<Link> newestLinks = Link.INSTANCE.findNewest(new PageInfo(), Link.Status.SHOW);
 		List<Comment> newestComments = Comment.INSTANCE.findNewest(new PageInfo());

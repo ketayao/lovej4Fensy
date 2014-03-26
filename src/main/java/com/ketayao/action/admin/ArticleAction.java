@@ -17,7 +17,7 @@ import java.util.List;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.pojo.ArticleTag;
 import com.ketayao.pojo.Category;
@@ -38,7 +38,7 @@ public class ArticleAction {
 	private static final String UPDATE = "admin/content/article-update";
 	private static final String VIEW = "admin/content/article-view";
 	
-	public String preCreate(RequestContext rc) {
+	public String preCreate(WebContext rc) {
 		List<Category> parents = Category.INSTANCE.findTree(false);
 		List<Tag> tags = (List<Tag>)Tag.INSTANCE.queryCacheList();
 		
@@ -47,7 +47,7 @@ public class ArticleAction {
 		return CREATE;
 	}
 
-	public String create(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String create(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		User user = User.getLoginUser(rc);
 		Article article = rc.convertBean(Article.class);
 		//BeanUtils.populate(article, rc.getParameterMap());
@@ -79,7 +79,7 @@ public class ArticleAction {
 		return preCreate(rc);
 	}
 	
-	public String read(RequestContext rc) {
+	public String read(WebContext rc) {
 		User user = User.getLoginUser(rc);
 		
 		long categoryId = rc.getParam("categoryId", 0L);
@@ -105,7 +105,7 @@ public class ArticleAction {
 		return READ;
 	}
 	
-	public String preUpdate(RequestContext rc) throws Exception {
+	public String preUpdate(WebContext rc) throws Exception {
 		long id = rc.getParam("id", 0L);
 		long categoryId = rc.getParam("categoryId", 0L);
 		int pageIndex = rc.getParam("pageIndex", 1);
@@ -132,7 +132,7 @@ public class ArticleAction {
 		return UPDATE;
 	}
 	
-	public String update(RequestContext rc) throws Exception {
+	public String postUpdate(WebContext rc) throws Exception {
 		Article article = Article.INSTANCE.get(rc.getId());
 		article.setOldStatus(article.getStatus());
 		rc.populate(article);
@@ -165,7 +165,7 @@ public class ArticleAction {
 		return UPDATE;
 	}
 	
-	public String delete(RequestContext rc) {
+	public String delete(WebContext rc) {
 		long id = rc.getParam("id", 0L);	
 		Article article = Article.INSTANCE.get(id);
 		article.delete();
@@ -174,7 +174,7 @@ public class ArticleAction {
 					+ rc.getParam("pageIndex", 1L) + "&categoryId=" + rc.getParam("categoryId", "");
 	}
 	
-	public String view(RequestContext rc, Long id) {
+	public String view(WebContext rc, Long id) {
 		Article article = Article.INSTANCE.get(id);
 		rc.setRequestAttr("article", article);
 		return VIEW;

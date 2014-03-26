@@ -213,7 +213,7 @@ public class Link extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Link> findPage(PageInfo pageInfo, Boolean trash) {
-		List<Long> ids = Link.INSTANCE.ids(FIND_PAGE, BooleanUtils.toInteger(trash));
+		List<Long> ids = Link.INSTANCE.getIds(FIND_PAGE, BooleanUtils.toInteger(trash));
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -225,7 +225,7 @@ public class Link extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Link> findNewest(PageInfo pageInfo, String status) {
-		List<Long> ids = Link.INSTANCE.ids(FIND_NEWEST, status);
+		List<Long> ids = Link.INSTANCE.getIds(FIND_NEWEST, status);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		

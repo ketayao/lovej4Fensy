@@ -23,8 +23,8 @@ import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ketayao.fensy.handler.ExceptionHandler;
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.handler.SimpleExceptionHandler;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.RequestUtils;
 import com.ketayao.system.SystemConfig;
 import com.ketayao.util.StringUtils;
@@ -35,7 +35,7 @@ import com.ketayao.util.StringUtils;
  * @since   2013年9月7日 下午6:27:05 
  */
 
-public class EmailExceptionHandler extends ExceptionHandler {
+public class EmailExceptionHandler extends SimpleExceptionHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(EmailExceptionHandler.class);
 	
@@ -210,10 +210,10 @@ public class EmailExceptionHandler extends ExceptionHandler {
 	 * @param rc
 	 * @param exception
 	 * @return  
-	 * @see com.ketayao.fensy.handler.Handler#handle(com.ketayao.fensy.mvc.RequestContext, java.lang.Exception)  
+	 * @see com.ketayao.fensy.handler.ExceptionHandler#handle(com.ketayao.fensy.mvc.WebContext, java.lang.Exception)  
 	 */
 	@Override
-	public String handle(final RequestContext rc, final Exception exception) {
+	public String handle(final WebContext rc, final Exception exception) {
 		String view = super.handle(rc, exception);
 		
 		Thread thread = new Thread(new Runnable() {

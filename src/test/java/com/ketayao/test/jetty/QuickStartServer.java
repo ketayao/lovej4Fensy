@@ -14,9 +14,6 @@ public class QuickStartServer {
 	public static final String BASE_URL = "http://localhost:" + PORT + CONTEXT;
 
 	public static void main(String[] args) throws Exception {
-		// 设定Spring的profile
-		System.setProperty("spring.profiles.active", "production");
-
 		// 启动Jetty
 		Server server = JettyFactory.createServerInSource(PORT, CONTEXT);
 		//JettyFactory.setTldJarNames(server, TLD_JAR_NAMES);

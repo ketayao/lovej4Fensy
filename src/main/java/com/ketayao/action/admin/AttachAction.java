@@ -22,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.util.Exceptions;
 import com.ketayao.fensy.webutil.StorageService;
 import com.ketayao.pojo.Article;
@@ -38,7 +38,7 @@ import com.ketayao.system.SystemConfig;
 public class AttachAction {
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	public String delete(RequestContext rc, long id) throws IOException {
+	public String delete(WebContext rc, long id) throws IOException {
 		Attach attach = Attach.INSTANCE.get(id);
 		if (attach != null) {
 			StorageService ss = new StorageService(SystemConfig.getConfig().get("lovej.upload.file"));
@@ -54,7 +54,7 @@ public class AttachAction {
 		return view;
 	}
 	
-	public String upload(RequestContext rc) throws UnsupportedEncodingException {
+	public String upload(WebContext rc) throws UnsupportedEncodingException {
 		String view = "redirect:" + rc.getContextPath() + "/admin/article/preUpdate?id=" 
 						+ rc.getParam("id") + "&categoryId=" + rc.getParam("categoryId") 
 						+ "&pageIndex=" + rc.getParam("pageIndex") + "&message=";
@@ -67,7 +67,7 @@ public class AttachAction {
 		Map<String, String> extMap = SystemConfig.EXTEND_TYPE;
 
 		// 允许最大上传文件大小
-		long maxSize = Long.parseLong(SystemConfig.getConfig().get("lovej.upload.maxSize"));
+		long maxSize = WebContext.getMaxSize();
 
 		String fn = "";
 		try {

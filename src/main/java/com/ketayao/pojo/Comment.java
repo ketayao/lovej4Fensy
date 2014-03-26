@@ -266,13 +266,13 @@ public class Comment extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> find(long articleId) {
-		List<Long> ids = ids(ARTICLEIDS, articleId);
+		List<Long> ids = getIds(ARTICLEIDS, articleId);
 		return (List<Comment>)loadList(ids);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> findNewest(PageInfo pageInfo) {
-		List<Long> ids = ids(FIND_NEWEST);
+		List<Long> ids = getIds(FIND_NEWEST);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -282,7 +282,7 @@ public class Comment extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> findPage(long articleId, PageInfo pageInfo) {
-		List<Long> ids = ids(ARTICLEIDS, articleId);
+		List<Long> ids = getIds(ARTICLEIDS, articleId);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -292,7 +292,7 @@ public class Comment extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> findByParentId(long parentId) {
-		List<Long> ids = ids(CHILDREN_COMMENTS, parentId);
+		List<Long> ids = getIds(CHILDREN_COMMENTS, parentId);
 		
 		List<Comment> list = loadList(ids);
 		return list;
@@ -300,7 +300,7 @@ public class Comment extends POJO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Comment> findNoParent(long articleId, PageInfo pageInfo) {
-		List<Long> ids = ids(NO_PARENT_COMMENTS, articleId);
+		List<Long> ids = getIds(NO_PARENT_COMMENTS, articleId);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		

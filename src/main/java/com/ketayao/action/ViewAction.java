@@ -19,7 +19,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.pojo.Comment;
 import com.ketayao.pojo.User;
@@ -40,19 +40,19 @@ public class ViewAction extends AbstractAction {
 	 * @param rc
 	 * @param p
 	 * @return  
-	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.RequestContext, java.lang.String[])  
+	 * @see com.ketayao.action.AbstractAction#process(com.ketayao.fensy.mvc.WebContext, java.lang.String[])  
 	 */
 	@Override
-	protected String process(RequestContext rc, String[] p) throws Exception {
+	protected String process(WebContext rc, String[] p) throws Exception {
 		// 初始化所需参数
 		if (p.length < 1) {
-			return "redirect:" +PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		Article article = Article.INSTANCE.get(NumberUtils.toLong(p[0], 0));
 		
 		// 判断是否被删除
 		if (BooleanUtils.toBoolean(article.getTrash()) || !article.getStatus().equals(Article.Status.PUBLISH)) {
-			return "redirect:" +PAGE_404;
+			return "redirect:" + rc.getContextPath() + "/" + PAGE_404;
 		}
 		
 		// 更新当前article的view浏览次数和评论数
@@ -77,7 +77,7 @@ public class ViewAction extends AbstractAction {
 		return VIEW;
 	}
 
-	private Comment getCommentUserFromCookie(RequestContext rc) {
+	private Comment getCommentUserFromCookie(WebContext rc) {
 		Comment comment = new Comment();
 		
 		User user = User.getLoginUser(rc);
@@ -90,7 +90,7 @@ public class ViewAction extends AbstractAction {
 		
 		Cookie cookie = rc.getCookie(Constants.COMMENT_USER);
 		if (cookie != null) {
-			String cookieValue = RequestContext._decrypt(cookie.getValue());
+			String cookieValue = WebContext.decrypt(cookie.getValue());
 			comment.setName(StringUtils.substringBefore(cookieValue, "|"));
 			comment.setEmail(StringUtils.substringBetween(cookieValue, "|"));
 			comment.setSite(StringUtils.substringAfterLast(cookieValue, "|"));

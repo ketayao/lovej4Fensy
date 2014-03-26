@@ -2,7 +2,7 @@ package com.ketayao.action.admin;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.SiteConfig;
 import com.ketayao.system.Constants;
 
@@ -13,7 +13,7 @@ public class SiteConfigAction {
 		return UPDATE;
 	}
 
-	public String u(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String u(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		SiteConfig siteConfig = SiteConfig.INSTANCE.get(1);
 		rc.populate(siteConfig);
 		

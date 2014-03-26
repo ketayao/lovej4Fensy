@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.ketayao.fensy.db.POJO;
 import com.ketayao.fensy.mvc.IUser;
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.system.Constants;
 
 /**
@@ -153,7 +153,7 @@ public class User extends POJO implements IUser {
 	 * @param request
 	 * @return  
 	 */
-	public static User getLoginUser(RequestContext rc) {
+	public static User getLoginUser(WebContext rc) {
 		Object loginUser = rc.getRequestAttr(Constants.LOGIN_USER);
 		if (loginUser == null) {
 			// get user id from cookie

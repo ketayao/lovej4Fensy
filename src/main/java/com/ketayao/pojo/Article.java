@@ -54,6 +54,7 @@ public class Article extends POJO implements Searchable {
 	private Timestamp postTime;
 	private Timestamp modifyTime;
 	private Timestamp topTime;// 置顶时间
+	private String permalink;// 永久链接地址，类似 /2012/09/02/自定义名
 	private long categoryId;
 	private long userId;
 	
@@ -284,6 +285,22 @@ public class Article extends POJO implements Searchable {
 	}
 
 	/**  
+	 * 返回 permalink 的值   
+	 * @return permalink  
+	 */
+	public String getPermalink() {
+		return permalink;
+	}
+
+	/**  
+	 * 设置 permalink 的值  
+	 * @param permalink
+	 */
+	public void setPermalink(String permalink) {
+		this.permalink = permalink;
+	}
+
+	/**  
 	 * 返回 userId 的值   
 	 * @return userId  
 	 */
@@ -409,8 +426,8 @@ public class Article extends POJO implements Searchable {
 	public boolean delete() {
 		boolean result = updateAttr("trash", 1);
 		if (result) {
-			evict(true);
-			evict(OBJ_COUNT_CACHE_KEY);
+			evictCache(true);
+			evictCache(OBJ_COUNT_CACHE_KEY);
 			
 			CacheManager.clear(QUERY_CACHE);// 清除所有的查询缓存
 		}
@@ -428,7 +445,7 @@ public class Article extends POJO implements Searchable {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Article> findPage(long userId, long categoryId, PageInfo pageInfo) {
-		List<Long> ids = ids(ARTICLEIDS, 
+		List<Long> ids = getIds(ARTICLEIDS, 
 				userId, categoryId);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
@@ -447,7 +464,7 @@ public class Article extends POJO implements Searchable {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Article> findPage(long userId, Boolean trash, PageInfo pageInfo) {
-		List<Long> ids = ids(ARTICLEIDS2, userId, BooleanUtils.toInteger(trash));
+		List<Long> ids = getIds(ARTICLEIDS2, userId, BooleanUtils.toInteger(trash));
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -463,7 +480,7 @@ public class Article extends POJO implements Searchable {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Article> findHome(PageInfo pageInfo) {
-		List<Long> ids = ids(HOME_ARTICLEIDS);
+		List<Long> ids = getIds(HOME_ARTICLEIDS);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -479,7 +496,7 @@ public class Article extends POJO implements Searchable {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Article> findNewest(PageInfo pageInfo) {
-		List<Long> ids = ids(FIND_NEWEST);
+		List<Long> ids = getIds(FIND_NEWEST);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -489,7 +506,7 @@ public class Article extends POJO implements Searchable {
 	
 	@SuppressWarnings("unchecked")
 	public List<Article> findHotest(PageInfo pageInfo) {
-		List<Long> ids = ids("trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY view DESC");
+		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY view DESC");
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -512,7 +529,7 @@ public class Article extends POJO implements Searchable {
 			return new ArrayList<Article>(0);
 		}
 		
-		List<Long> ids = ids("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND id in (?) ORDER BY id DESC", idString);
+		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND id in (?) ORDER BY id DESC", idString);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -522,7 +539,7 @@ public class Article extends POJO implements Searchable {
 	
 	@SuppressWarnings("unchecked")
 	public List<Article> findByUserId(long userId, PageInfo pageInfo) {
-		List<Long> ids = ids("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND userId = ? ORDER BY id DESC", userId);
+		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND userId = ? ORDER BY id DESC", userId);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -540,7 +557,7 @@ public class Article extends POJO implements Searchable {
 		
 		Timestamp endTime = new Timestamp(calendar.getTime().getTime());
 		
-		List<Long> ids = ids("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND postTime BETWEEN ? AND ? ORDER BY id DESC", startTime, endTime);
+		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND postTime BETWEEN ? AND ? ORDER BY id DESC", startTime, endTime);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -559,7 +576,7 @@ public class Article extends POJO implements Searchable {
 	public List<Article> findExtendCategory(long categoryId, PageInfo pageInfo) {
 		String sql = "categoryId = ? AND trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY topTime DESC, id DESC";
 		
-		List<Long> ids = ids(sql, categoryId);
+		List<Long> ids = getIds(sql, categoryId);
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -577,7 +594,7 @@ public class Article extends POJO implements Searchable {
 
 		String sql = "categoryId in (" + ids + ") AND trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY topTime DESC, id DESC";
 
-		List<Long> idList = ids(sql);
+		List<Long> idList = getIds(sql);
 		pageInfo.setTotalRec(idList.size());
 		List<Long> returnIds = idList.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -587,7 +604,7 @@ public class Article extends POJO implements Searchable {
 	
 	@SuppressWarnings("unchecked")
 	public List<Article> search(String title, PageInfo pageInfo) {
-		List<Long> ids = ids("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND title like ? ORDER BY id DESC", "%" + title + "%");
+		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND title like ? ORDER BY id DESC", "%" + title + "%");
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		
@@ -600,7 +617,7 @@ public class Article extends POJO implements Searchable {
 	 * @return
 	 */
 	public Article pre() {
-		List<Long> ids = ids(" id < ? AND trash = ? AND status = ? ORDER BY id DESC LIMIT 1", getId(), 0, Article.Status.PUBLISH);
+		List<Long> ids = getIds(" id < ? AND trash = ? AND status = ? ORDER BY id DESC LIMIT 1", getId(), 0, Article.Status.PUBLISH);
 		if (ids.isEmpty()) {
 			return null;
 		}
@@ -613,7 +630,7 @@ public class Article extends POJO implements Searchable {
 	 * @return
 	 */
 	public Article next() {
-		List<Long> ids = ids(" id > ? AND trash = ? AND status = ? ORDER BY id LIMIT 1", getId(), 0, Article.Status.PUBLISH);
+		List<Long> ids = getIds(" id > ? AND trash = ? AND status = ? ORDER BY id LIMIT 1", getId(), 0, Article.Status.PUBLISH);
 		if (ids.isEmpty()) {
 			return null;
 		}
@@ -633,12 +650,8 @@ public class Article extends POJO implements Searchable {
 		return map;
 	}
 
-	/**   
-	 * @return  
-	 * @see com.ketayao.fensy.db.POJO#queryCacheRegion()  
-	 */
 	@Override
-	protected String queryCacheRegion() {
+	protected String getQueryCacheRegion() {
 		return QUERY_CACHE;
 	}
 

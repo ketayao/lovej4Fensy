@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.util.Exceptions;
 import com.ketayao.fensy.webutil.ServletUtils;
 import com.ketayao.fensy.webutil.StorageService;
@@ -36,7 +36,7 @@ import com.ketayao.system.SystemConfig;
 public class DownloadAction {
 	private static final Logger logger = LoggerFactory.getLogger(DownloadAction.class);
 	
-	public void index(RequestContext rc) throws IOException {
+	public void index(WebContext rc) throws IOException {
 		if (rc.isRobot()) {
 			rc.forbidden();
 			return;

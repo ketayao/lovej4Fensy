@@ -16,7 +16,7 @@ package com.ketayao.action.admin;
 import java.io.IOException;
 import java.util.List;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Tag;
 
 /** 
@@ -29,7 +29,7 @@ import com.ketayao.pojo.Tag;
 public class TagAction {
 	
 	@SuppressWarnings("unchecked")
-	public void tags(RequestContext rc) throws IOException {
+	public void tags(WebContext rc) throws IOException {
 		List<Tag> tags = (List<Tag>)Tag.INSTANCE.list();
 		
 		StringBuilder builder = new StringBuilder();

@@ -13,7 +13,7 @@
  
 package com.ketayao.action.admin;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Article;
 import com.ketayao.search.IndexRebuilder;
 import com.ketayao.system.Constants;
@@ -29,11 +29,11 @@ import com.ketayao.system.SystemConfig;
 public class LuceneAction {
 	private final static String REBUILDER = "admin/site/rebuilder";
 	
-	public String index(RequestContext rc) throws Exception {
+	public String index(WebContext rc) throws Exception {
 		return REBUILDER;
 	}
 	
-	public String rebuilder(RequestContext rc) throws Exception {
+	public String rebuilder(WebContext rc) throws Exception {
 		String s = rc.getParam("-s", "200");
 		String p = rc.getParam("-p", SystemConfig.getConfig().get("blog.lucene.path"));
 		String b = rc.getParam("-b", Article.class.getName());

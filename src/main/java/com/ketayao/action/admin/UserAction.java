@@ -12,7 +12,7 @@ package com.ketayao.action.admin;
 
 import java.io.IOException;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.util.CryptUtils;
 import com.ketayao.pojo.User;
 
@@ -47,7 +47,7 @@ public class UserAction {
 	 * @param rc
 	 * @throws IOException
 	 */
-	public void checkUser(RequestContext rc) throws IOException {
+	public void checkUser(WebContext rc) throws IOException {
 		User user = User.INSTANCE.getByAttr("username", rc.getParam("username"));
 		if (user == null) {
 			rc.print("true");
@@ -56,7 +56,7 @@ public class UserAction {
 		}
 	}
 	
-	public String info(RequestContext rc) throws Exception {
+	public String info(WebContext rc) throws Exception {
 		User user = User.getLoginUser(rc);
 		
 		user.updateAttrs(new String[] { "nickname", "email", "frozen", "role"}, 
@@ -73,7 +73,7 @@ public class UserAction {
 		return PWD;
 	}
 	
-	public String modifyPwd(RequestContext rc) throws Exception {
+	public String modifyPwd(WebContext rc) throws Exception {
 		User user = User.getLoginUser(rc);
 		
 		String oldPassword = rc.getParam("oldPassword");

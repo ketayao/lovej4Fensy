@@ -17,7 +17,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.ketayao.fensy.mvc.RequestContext;
+import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Category;
 import com.ketayao.system.Constants;
 
@@ -34,19 +34,19 @@ public class CategoryAction {
 	private static final String UPDATE = "admin/content/category-update";
 	private static final String VIEW = "admin/content/category-view";
 	
-	public String read(RequestContext rc) {
+	public String read(WebContext rc) {
 		List<Category> parents = Category.INSTANCE.findTree(false);
 		rc.getRequest().setAttribute("parents", parents);
 		return READ;
 	}
 	
-	public String preCreate(RequestContext rc) {
+	public String preCreate(WebContext rc) {
 		List<Category> parents = Category.INSTANCE.findParent(false);
 		rc.getRequest().setAttribute("parents", parents);
 		return CREATE;
 	}
 	
-	public String create(RequestContext rc) throws Exception {
+	public String create(WebContext rc) throws Exception {
 		Category category = new Category();
 		BeanUtils.populate(category, rc.getRequest().getParameterMap());
 		
@@ -62,7 +62,7 @@ public class CategoryAction {
 		return preCreate(rc);
 	}
 	
-	public String delete(RequestContext rc, String[] args) throws Exception {
+	public String delete(WebContext rc, String[] args) throws Exception {
 		Category category = new Category();
 		category.setId(NumberUtils.toLong(args[0]));
 		category.delete();
@@ -70,18 +70,18 @@ public class CategoryAction {
 		return read(rc);
 	}
 	
-	public String view(RequestContext rc, String[] args) {
+	public String view(WebContext rc, String[] args) {
 		Category category = Category.INSTANCE.get(NumberUtils.toLong(args[0]));
 		rc.getRequest().setAttribute("category", category);
 		return VIEW;
 	}
 	
-	public String preUpdate(RequestContext rc, String[] args) {
+	public String preUpdate(WebContext rc, String[] args) {
 		view(rc, args);
 		return UPDATE;
 	}
 	
-	public String update(RequestContext rc) throws IllegalAccessException, InvocationTargetException {
+	public String update(WebContext rc) throws IllegalAccessException, InvocationTargetException {
 		Category category = Category.INSTANCE.get(rc.getId());
 		BeanUtils.populate(category, rc.getRequest().getParameterMap());
 		
