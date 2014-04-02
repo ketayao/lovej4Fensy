@@ -54,7 +54,7 @@ public class CommentAction extends AbstractAction {
 			return PAGE_500;
 		}
 		
-		if (StringUtils.isEmpty(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 250) {
+		if (StringUtils.isNotBlank(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 250) {
 			rc.setRequestAttr("exception", "评论内容不能为空，并且字数不能超过250个");
 			return PAGE_500;
 		}

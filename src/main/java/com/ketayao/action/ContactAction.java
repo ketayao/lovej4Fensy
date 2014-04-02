@@ -52,7 +52,7 @@ public class ContactAction extends AbstractAction {
 			return PAGE_500;
 		}
 		
-		if (StringUtils.isEmpty(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 500) {
+		if (StringUtils.isNotBlank(rc.getParam("content")) && ((String)rc.getParam("content")).length() > 500) {
 			rc.setRequestAttr("exception", "留言内容不能为空，并且字数不能超过500个");
 			return PAGE_500;
 		}
