@@ -74,6 +74,51 @@
 	});
 	
 </script>
+
+<script type="text/javascript" src="${rc.contextPath}/styles/AjaxFileUploaderV2.1/ajaxfileupload.js"></script>
+<script type="text/javascript">
+function ajaxFileUpload(){
+	$("#loading").ajaxStart(function(){
+		$(this).show();
+	}).ajaxComplete(function(){
+		$(this).hide();
+	});
+
+	var arr = [];
+	arr[0] = 'imgFile';
+	$.ajaxFileUpload({
+		url:'${rc.contextPath}/admin/file/upload',
+		secureuri:false,
+		fileElementId:arr,
+		dataType: 'json',
+		data:{},
+		success: function (data, status) {
+			if(typeof(data.error) != 'undefined'){
+				if(data.error == 1){
+					alert(data.message);
+				} else {
+					$("#showUrl").attr("src", data.url);
+					$("#showUrl").show();
+					$("#delImgBtn").show();
+					$("#imgUrl").val(data.url);
+				}
+			}
+		},
+		error: function (data, status, e){
+			alert(e);
+		}
+	});
+	
+	return false;
+}
+
+function deleteImg(){
+	$("#imgUrl").val("");
+	$("#showUrl").hide();
+	$("#delImgBtn").hide();
+}
+</script>
+
 <div id="main">
 	<form action="${rc.contextPath}/admin/article/create" class="jNice" method="POST" id="formID">
 		<h3 class="lovej-action">
@@ -86,6 +131,16 @@
 		<fieldset>
 			<p>
 				<label>${bundle("article.title")}<font color="red">*</font>:</label><input type="text" name="title" class="validate[required,maxSize[255]] text-long"  id="title"/>
+			</p>
+			<p>
+				<label>${bundle("article.imgUrl")}:<img id="loading" src="${rc.contextPath}/styles/AjaxFileUploaderV2.1/loading.gif" style="display:none;"></label>
+				<input id="imgFile" type="file" size="45" name="imgFile" class="text-long">
+				<input type="button" value="上传" onclick="return ajaxFileUpload();">
+			</p>
+			<p>
+				<img id="showUrl" src="" style="display:none;">
+				<input id="delImgBtn" type="button" value="删除" onclick="deleteImg();" style="display:none;">
+				<input id="imgUrl" name="imgUrl" type="hidden">
 			</p>
 			<p>
 				<label>${bundle("article.keywords")}:</label><input type="text" name="keywords" id="keywords" class="validate[optional,maxSize[255]] text-long" style="width:640px;"/>

@@ -43,11 +43,12 @@ $(document).ready(function(){
 		</h3>
     	<table cellpadding="0" cellspacing="0">
 			<tr style="font-weight:bold;">
-				<td style="width:180px;">${bundle("article.title")}</td>
-				<td>${bundle("article.status")}</td>
-            	<td>${bundle("article.view")}</td>
-            	<td>${bundle("article.postTime")}</td>
-            	<td align="center">${bundle("form.action")}</td>
+				<td >${bundle("article.title")}</td>
+				<td width="30">${bundle("article.status")}</td>
+            	<td width="30">${bundle("article.view")}</td>
+            	<td width="30">${bundle("article.imgUrl")}</td>
+            	<td width="90">${bundle("article.postTime")}</td>
+            	<td align="center" width="100">${bundle("form.action")}</td>
         	</tr>
         	<#list articles as p>
         	<tr>
@@ -62,7 +63,8 @@ $(document).ready(function(){
             		</#if>
             	</td>
             	<td>${p.view}</td>
-            	<td>${p.postTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+            	<td><#if (p.imgUrl)?exists || (p.imgUrl) != ''>${bundle("article.imgUrl.yes")}<#else>${bundle("article.imgUrl.no")}</#if></td>
+            	<td>${p.postTime?string('yy-MM-dd HH:mm')}</td>
             	<td class="action">
             		<a target="_blank" href="${rc.contextPath}/view/${p.id}" class="view">${bundle("form.view")}</a>
             		<a href="${rc.contextPath}/admin/article/preUpdate?id=${p.id}&categoryId=${categoryId!''}&pageIndex=${pageInfo.pageIndex}" class="edit">${bundle("form.edit")}</a>

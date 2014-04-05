@@ -57,6 +57,7 @@ public class Article extends POJO implements Searchable {
 	private String permalink;// 永久链接地址，类似 /2012/09/02/自定义名
 	private long categoryId;
 	private long userId;
+	private String imgUrl;
 	
 	// 排除字段
 	private User user;
@@ -332,6 +333,20 @@ public class Article extends POJO implements Searchable {
 		this.oldStatus = oldStatus;
 	}
 
+	/**
+	 * @return the imgUrl
+	 */
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	/**
+	 * @param imgUrl the imgUrl to set
+	 */
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	/**  
 	 * 返回 user 的值   
 	 * @return user  
@@ -507,6 +522,16 @@ public class Article extends POJO implements Searchable {
 	@SuppressWarnings("unchecked")
 	public List<Article> findHotest(PageInfo pageInfo) {
 		List<Long> ids = getIds("trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY view DESC");
+		pageInfo.setTotalRec(ids.size());
+		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
+		
+		List<Article> list = loadList(returnIds);
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Article> findTitleImages(PageInfo pageInfo) {
+		List<Long> ids = getIds("imgUrl is not null AND trash = 0 AND status = '" + Article.Status.PUBLISH + "' ORDER BY id DESC");
 		pageInfo.setTotalRec(ids.size());
 		List<Long> returnIds = ids.subList(pageInfo.getStartIndex(), pageInfo.getEndIndex());
 		

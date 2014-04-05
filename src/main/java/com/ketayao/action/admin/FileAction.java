@@ -26,16 +26,21 @@ public class FileAction {
 	private static final long MAX_IMG_SIZE = 1 * 1024 * 1024;
 
 	public void upload(WebContext rc) throws IOException {
-		File imgFile = rc.getImage("imgFile");
-		if (imgFile.length() > MAX_IMG_SIZE) {
-			rc.printJson(new String[] { "error", "message" }, new Object[] {
-					1, "File is too large" });
-			return;
+		try {
+			File imgFile = rc.getImage("imgFile");
+			if (imgFile.length() > MAX_IMG_SIZE) {
+				rc.printJson(new String[] { "error", "message" }, new Object[] {
+						1, "File is too large" });
+				return;
+			}
+			StorageService ss = StorageService.IMAGE;
+			String path = ss.save(imgFile);
+			String url = rc.getContextPath() + ss.getReadPath() + path;
+			rc.printJson(new String[] { "error", "url" },
+					new Object[] { 0, url });
+		} catch (Exception e) {
+			rc.printJson(new String[] {"error", "message"}, new Object[] {
+					1, "图片上传出错！"});
 		}
-		
-		StorageService ss = StorageService.IMAGE;
-		String path = ss.save(imgFile);
-		String url = rc.getContextPath() + "/" + ss.getReadPath() + path;
-		rc.printJson(new String[] { "error", "url" }, new Object[] {0, url});
 	}
 }

@@ -44,6 +44,12 @@ public class IndexAction extends AbstractAction {
 		rc.setRequestAttr("articles", articles);
 		rc.setRequestAttr("pageInfo", pageInfo);
 		
+		// 有标题图片的日志
+		PageInfo pageInfo2 = new PageInfo();
+		pageInfo2.setPageSize(5);
+		List<Article> imgArticles = Article.INSTANCE.findTitleImages(pageInfo2);
+		rc.setRequestAttr("imgArticles", imgArticles);
+		
 		return READ;
 	}
 
