@@ -146,9 +146,10 @@ public class ArticleAction {
 		
 		article.setModifyTime(timestamp);
 		article.updateAttrs(new String[]{"title", "content", "keywords", "summary", "status", "trash", 
-				"modifyTime", "topTime", "categoryId"}, 
+				"modifyTime", "topTime", "categoryId", "imgUrl"}, 
 				new Object[]{article.getTitle(), article.getContent(), article.getKeywords(), article.getSummary(),
-				article.getStatus(), article.getTrash(), article.getModifyTime(), article.getTopTime(), article.getCategoryId()});
+				article.getStatus(), article.getTrash(), article.getModifyTime(), article.getTopTime(), 
+				article.getCategoryId(), article.getImgUrl()});
 		
 		String tags = rc.getParam("tags");
 		String[] tagArray = null;

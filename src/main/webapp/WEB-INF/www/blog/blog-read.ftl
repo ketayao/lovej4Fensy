@@ -12,6 +12,41 @@
 
 <#escape x as x?html>
 <@com.page title=navTitle navTitle=navTitle keywords=navTitle>
+
+<#if navTitle == "首页">
+<link rel="stylesheet" href="${rc.contextPath}/styles/nivo-slider3.2/themes/light/light.css" type="text/css" media="screen">
+<link rel="stylesheet" href="${rc.contextPath}/styles/nivo-slider3.2/nivo-slider.css" type="text/css" media="screen">
+<script src="${rc.contextPath}/styles/nivo-slider3.2/jquery.nivo.slider.pack.js" type="text/javascript"></script>   
+<script>
+    $(window).load(function() {
+        $('#slider').nivoSlider({
+            effect:'slideInLeft',
+            slices:15,
+            animSpeed:500,
+            pauseTime:4000,
+            directionNav:false,
+            directionNavHide:false,
+            controlNav:true,
+            captionOpacity:0.9
+        });
+    });
+</script>
+<article id="post-imgTitle" class="post type-post status-publish format-standard hentry">
+<section id="slider-wrapper"><!-- Nivo promo slider -->
+    <div id="slider" class="nivoSlider">
+    	<#list imgArticles as a>
+    	<img src="${a.imgUrl}" alt="" title="#htmlcaption-${a.id}">
+    	</#list>
+    </div>
+    <#list imgArticles as a>
+    <div id="htmlcaption-${a.id}" class="nivo-html-caption">
+        <p><a href="${rc.contextPath}/view/${a.id}">${a.title}</a></p> 
+    </div>
+    </#list>
+</section>
+</article>
+</#if>
+
 <#list articles as a>
 <article id="post-${a.id}" class="post type-post status-publish format-standard hentry">
 	<header class="entry-header">
