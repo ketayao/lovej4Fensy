@@ -7,7 +7,5 @@
 /.settings
 /.classpath
 /.project
-/src/main/resources/db.properties
-/src/main/resources/loveJ.properties
 /keta_logs
 /uploads
