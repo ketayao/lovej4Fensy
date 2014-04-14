@@ -739,11 +739,11 @@ public class Article extends POJO implements Searchable {
 	 * @param id
 	 * @param count
 	 * @return  
-	 * @see net.oschina.common.search.Searchable#ListAfter(long, int)  
+	 * @see net.oschina.common.search.Searchable#listAfter(long, int)  
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<? extends Searchable> ListAfter(long id, int count) {
+	public List<? extends Searchable> listAfter(long id, int count) {
 		return (List<Article>)Article.INSTANCE.list("trash = 0 AND status = '" + Article.Status.PUBLISH + "' AND id > " + id);
 	}
 	
