@@ -24,7 +24,6 @@
 <![endif]-->
 <link rel="canonical" href="${siteConfig.url}/">
 <link rel="shortcut icon" href="${rc.contextPath}/styles/admin/images/favicon.ico" />
-<link rel="stylesheet" id="twentytwelve-fonts-css" href="${rc.contextPath}/styles/blog/css/css.css" type="text/css" media="all">
 <link rel="stylesheet" id="twentytwelve-style-css" href="${rc.contextPath}/styles/blog/css/style.css" type="text/css" media="all">
 <!--[if lt IE 9]>
 <link rel='stylesheet' id='twentytwelve-ie-css'  href='${rc.contextPath}/styles/blog/css/ie.css' type='text/css' media='all' />
@@ -109,7 +108,7 @@ span.highlight {
   <div id="main" class="wrapper">
     <div id="primary" class="site-content">
       <div id="content" role="main">
-      	<#if who??>
+      	<#if who?exists>
 		<header class="archive-header">
 			<h1 class="archive-title">${who}</h1>
 		</header> 
@@ -162,7 +161,7 @@ span.highlight {
         <ul id="recentcomments">
           <#list newestComments as c>
           	<li class="recentcomments">
-          		<#if c.site?? && c.site?trim != ''>
+          		<#if c.site?exists && c.site?trim != ''>
           			<a href="${c.site}" rel="external nofollow" class="url">${c.name}</a>
           			<#else>
           			${c.name}

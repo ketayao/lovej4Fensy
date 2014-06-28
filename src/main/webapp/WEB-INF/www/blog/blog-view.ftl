@@ -23,8 +23,11 @@
 	<!-- .comments-link --> 
   	</header>
   	<!-- .entry-header -->
-  
+  	
   	<div class="entry-content">
+  	<#if article.imgUrl?exists>
+		<center><img src="${article.imgUrl}" alt=""/></center>
+  	</#if>
 	<#noescape>${article.content}</#noescape>
 	<#if article.attaches?size gt 0>
 		<h4>附件：</h4>
@@ -66,10 +69,10 @@
 </div>
 <nav class="nav-single">
 	<h3 class="assistive-text">文章导航</h3>
-	<#if pa??>
+	<#if pa?exists>
 	<span class="nav-previous"><a rel="prev" href="${rc.contextPath}/view/${pa.id}"><span class="meta-nav">←</span>${pa.title}</a></span>
 	</#if>
-	<#if na??>
+	<#if na?exists>
 	<span class="nav-next"><a rel="next" href="${rc.contextPath}/view/${na.id}">${na.title}<span class="meta-nav">→</span></a></span>
 	</#if>
 </nav>
@@ -91,26 +94,26 @@
 	<h2 class="comments-title">《<span>${article.title}</span>》上有${article.comments?size}条评论</h2>
 	<ol class="commentlist">
 	<#list comments as c>
-	<li id="li-comment-${c.id}" class="comment <#if c.userId?? && c.userId gt 0>bypostauthor</#if>">
+	<li id="li-comment-${c.id}" class="comment <#if c.userId?exists && c.userId gt 0>bypostauthor</#if>">
 		<article class="comment" id="comment-${c.id}">
 			<header class="comment-meta comment-author vcard">
-				<#if c.userId?? && c.userId gt 0>
+				<#if c.userId?exists && c.userId gt 0>
 					<img width="44" height="44" class="photo" src="${rc.contextPath}/styles/blog/images/author.jpeg" alt="">
 					<cite><b class="fn">${article.user.nickname}</b> <span>文章作者</span></cite>	
 				<#else>
 					<img width="44" height="44" class="photo" src="${rc.contextPath}/styles/blog/images/somebody.jpeg" alt="">
 					<cite>
 						<b class="fn">
-					<#if c.site?? && c.site?trim!=''>
-						<a class="url" rel="external nofollow" href="${c.site}"><#if !c.name?? || c.name?trim==''>匿名<#else>${c.name}</#if></a>
+					<#if c.site?exists && c.site?trim!=''>
+						<a class="url" rel="external nofollow" href="${c.site}"><#if !c.name?exists || c.name?trim==''>匿名<#else>${c.name}</#if></a>
 					<#else>
-						<#if !c.name?? || c.name?trim==''>匿名<#else>${c.name}</#if>					
+						<#if !c.name?exists || c.name?trim==''>匿名<#else>${c.name}</#if>					
 					</#if>
 						</b>
 					</cite>					
 				</#if>
 					<a href="${rc.contextPath}/view/${article.id}/${cp.pageIndex}#comment-${c.id}"><time datetime="${c.postTime}">${c.postTime?string('yyyy 年 MM 月 dd 日')} ${c.postTime?time?string.short}</time></a>
-				<#if (!c.children?? || c.children?size lt 1) && (user.id == article.userId)>		
+				<#if (!c.children?exists || c.children?size lt 1) && (user.id == article.userId)>		
 					<a class="url" href="${rc.contextPath}/admin/comment/d/${c.id}" style="text-decoration:underline;"><time>删除此评论</time></a>
 				</#if>
 			</header><!-- .comment-meta -->
@@ -127,7 +130,7 @@
 	</#list>
 	</ol>
 	
-	<#if cp?? && cp.totalPage gt 1>
+	<#if cp?exists && cp.totalPage gt 1>
 		<nav role="navigation" class="navigation" id="comment-nav-below">
 			<h1 class="assistive-text section-heading">评论导航</h1>
 			<#if cp.pageIndex != 1><div class="nav-previous"><a href="${rc.contextPath}/view/${article.id}/${cp.prePage}#comments">← 早期评论</a></div></#if>
@@ -190,9 +193,9 @@
 		<h3 class="comment-reply-title" id="reply-title">发表评论 <small><a style="display:none;" onclick='return removeParentId()' href="#" id="cancel-comment-reply-link" rel="nofollow">取消回复</a></small></h3>
 		<form class="comment-form" id="commentform" method="post" action="${rc.contextPath}/comment/${cp.pageIndex}">
 			<p class="comment-notes">电子邮件地址不会被公开。</p>							
-			<p class="comment-form-author"><label for="author">姓名</label> <input type="text" size="30" name="name" id="author" value="${cookieUser.name!''}"></p>
-			<p class="comment-form-email"><label for="email">电子邮件</label> <input type="text" size="30" name="email" id="email" value="${cookieUser.email!''}"></p>
-			<p class="comment-form-url"><label for="url">站点</label> <input type="text" size="30" value="" name="site" id="url" value="${cookieUser.site!''}"></p>
+			<p class="comment-form-author"><label for="author">姓名</label> <input type="text" size="30" name="name" id="author" value="${cookieUser.name?if_exists}"></p>
+			<p class="comment-form-email"><label for="email">电子邮件</label> <input type="text" size="30" name="email" id="email" value="${cookieUser.email?if_exists}"></p>
+			<p class="comment-form-url"><label for="url">站点</label> <input type="text" size="30" value="" name="site" id="url" value="${cookieUser.site?if_exists}"></p>
 			<p class="comment-form-comment">
 				<label for="comment">评论
 					<span class="msg-box" data-for="content" style="margin-top:4px;"></span>

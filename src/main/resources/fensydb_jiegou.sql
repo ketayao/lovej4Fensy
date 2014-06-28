@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50515
 File Encoding         : 65001
 
-Date: 2014-04-05 15:45:44
+Date: 2014-06-28 12:27:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,14 +35,12 @@ CREATE TABLE `lovej_articles` (
   `trash` tinyint(1) DEFAULT NULL,
   `topTime` timestamp NULL DEFAULT NULL,
   `imgUrl` varchar(255) DEFAULT NULL,
-  `permalink` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `permalink` (`permalink`),
   KEY `userId` (`userId`),
   KEY `categoryId` (`categoryId`),
   CONSTRAINT `lovej_articles_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `lovej_users` (`id`),
   CONSTRAINT `lovej_articles_ibfk_2` FOREIGN KEY (`categoryId`) REFERENCES `lovej_categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_article_tags
@@ -57,7 +55,7 @@ CREATE TABLE `lovej_article_tags` (
   KEY `tagId` (`tagId`),
   CONSTRAINT `lovej_article_tags_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `lovej_articles` (`id`),
   CONSTRAINT `lovej_article_tags_ibfk_2` FOREIGN KEY (`tagId`) REFERENCES `lovej_tags` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_attaches
@@ -70,9 +68,9 @@ CREATE TABLE `lovej_attaches` (
   `url` varchar(255) NOT NULL,
   `download` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `articleId` (`articleId`) USING BTREE,
+  KEY `articleId` (`articleId`),
   CONSTRAINT `lovej_attaches_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `lovej_articles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_categories
@@ -90,7 +88,7 @@ CREATE TABLE `lovej_categories` (
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`),
   CONSTRAINT `lovej_categories_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `lovej_categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_comments
@@ -112,7 +110,7 @@ CREATE TABLE `lovej_comments` (
   KEY `parentId` (`parentId`),
   CONSTRAINT `lovej_comments_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `lovej_articles` (`id`),
   CONSTRAINT `lovej_comments_ibfk_2` FOREIGN KEY (`parentId`) REFERENCES `lovej_comments` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_contacts
@@ -129,7 +127,7 @@ CREATE TABLE `lovej_contacts` (
   `status` varchar(10) NOT NULL,
   `trash` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_links
@@ -144,19 +142,7 @@ CREATE TABLE `lovej_links` (
   `status` varchar(10) NOT NULL,
   `trash` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for lovej_roles
--- ----------------------------
-DROP TABLE IF EXISTS `lovej_roles`;
-CREATE TABLE `lovej_roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `description` varchar(255) DEFAULT NULL,
-  `name` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_site_configs
@@ -170,7 +156,7 @@ CREATE TABLE `lovej_site_configs` (
   `name` varchar(50) NOT NULL,
   `url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_tags
@@ -180,7 +166,7 @@ CREATE TABLE `lovej_tags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+);
 
 -- ----------------------------
 -- Table structure for lovej_users
@@ -197,4 +183,4 @@ CREATE TABLE `lovej_users` (
   `role` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+);
