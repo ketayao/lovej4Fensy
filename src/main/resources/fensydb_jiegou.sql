@@ -35,6 +35,7 @@ CREATE TABLE `lovej_articles` (
   `trash` tinyint(1) DEFAULT NULL,
   `topTime` timestamp NULL DEFAULT NULL,
   `imgUrl` varchar(255) DEFAULT NULL,
+  `permalink` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   KEY `categoryId` (`categoryId`),
