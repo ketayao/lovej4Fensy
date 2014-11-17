@@ -6,7 +6,7 @@
  *
  * </pre>
  **/
- 
+
 package com.ketayao.action.admin;
 
 import java.util.List;
@@ -23,35 +23,35 @@ import com.ketayao.util.PageInfo;
  */
 
 public class ContactAction {
-	private static final String READ = "admin/contact/contact-read";
+    private static final String READ = "admin/contact/contact-read";
 
-	public String r(WebContext rc) {
-		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
-		
-		List<Contact> contacts = Contact.INSTANCE.findPage(pageInfo, false);
-		pageInfo.setUrl("readContact?pageIndex=");
-		rc.setRequestAttr("contacts", contacts);
-		rc.setRequestAttr("pageInfo", pageInfo);
-		
-		return READ;
-	}
-	
-	public String u(WebContext rc) {
-		Contact contact = Contact.INSTANCE.get(rc.getId());
-		contact.setStatus(rc.getParam("status", Contact.Status.NEW));
-		
-		PageInfo pageInfo = new PageInfo();
-		pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
-		
-		contact.updateAttr("status", contact.getStatus());
-		return r(rc);
-	}
+    public String r(WebContext rc) {
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
 
-	public String d(WebContext rc) {
-		Contact contact = Contact.INSTANCE.get(rc.getId());
-		contact.delete();
-		
-		return r(rc);
-	}	
+        List<Contact> contacts = Contact.INSTANCE.findPage(pageInfo, false);
+        pageInfo.setUrl("r?pageIndex=");
+        rc.setRequestAttr("contacts", contacts);
+        rc.setRequestAttr("pageInfo", pageInfo);
+
+        return READ;
+    }
+
+    public String u(WebContext rc) {
+        Contact contact = Contact.INSTANCE.get(rc.getId());
+        contact.setStatus(rc.getParam("status", Contact.Status.NEW));
+
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
+
+        contact.updateAttr("status", contact.getStatus());
+        return r(rc);
+    }
+
+    public String d(WebContext rc) {
+        Contact contact = Contact.INSTANCE.get(rc.getId());
+        contact.delete();
+
+        return r(rc);
+    }
 }

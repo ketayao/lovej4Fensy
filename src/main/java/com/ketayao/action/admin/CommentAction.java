@@ -10,7 +10,7 @@
  *
  * </pre>
  **/
- 
+
 package com.ketayao.action.admin;
 
 import com.ketayao.fensy.mvc.WebContext;
@@ -24,10 +24,10 @@ import com.ketayao.pojo.Comment;
  */
 
 public class CommentAction {
-	public String d(WebContext rc, long id) {
-		Comment comment = Comment.INSTANCE.get(id);
-		comment.delete();
-		
-		return "redirect:" + rc.getContextPath() + "/view/" + comment.getArticleId() + "#comments";
-	}
+    public String d(WebContext rc, Long id) {
+        Comment comment = Comment.INSTANCE.get(id);
+        comment.delete();
+
+        return "redirect:" + rc.getContextPath() + "/view/" + comment.getArticleId() + "#comments";
+    }
 }

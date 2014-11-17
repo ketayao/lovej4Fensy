@@ -16,11 +16,11 @@ public class QuickStartServer {
 	public static void main(String[] args) throws Exception {
 		// 启动Jetty
 		Server server = JettyFactory.createServerInSource(PORT, CONTEXT);
-		//JettyFactory.setTldJarNames(server, TLD_JAR_NAMES);
+		// JettyFactory.setTldJarNames(server, TLD_JAR_NAMES);
 
 		try {
 			server.start();
-			
+
 			System.out.println("启动成功，请使用该路径访问系统：" + BASE_URL);
 			System.out.println("在控制台输入'r'重新加载应用，输入'q'退出jetty程序！");
 
