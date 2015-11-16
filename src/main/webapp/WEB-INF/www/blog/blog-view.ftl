@@ -130,19 +130,18 @@
 	</#list>
 	</ol>
 	
-	<#if cp?exists && cp.totalPage gt 1>
-		<nav role="navigation" class="navigation" id="comment-nav-below">
-			<h1 class="assistive-text section-heading">评论导航</h1>
-			<#if cp.pageIndex != 1><div class="nav-previous"><a href="${rc.contextPath}/view/${article.id}/${cp.prePage}#comments">← 早期评论</a></div></#if>
-			<#if cp.pageIndex != cp.totalPage><div class="nav-next"><a href="${rc.contextPath}/view/${article.id}/${cp.nextPage}#comments">较新评论 →</a></div></#if>
-		</nav>		
-	</#if>
+	 <#if cp?exists>
+		<div class="wp-pagenavi">
+		<#noescape>${cp.getPageBar("#comments")}</#noescape>
+		</div>
+	 </#if>	
+
 	</#if>
 <#-- form验证 -->
 <link rel="stylesheet" href="${rc.contextPath}/styles/validator-0.2.1/jquery.validator.css" type="text/css"/>
 <script src="${rc.contextPath}/styles/validator-0.2.1/jquery.validator.js" type="text/javascript" charset="utf-8"></script>
 <script src="${rc.contextPath}/styles/validator-0.2.1/local/zh_CN.js" type="text/javascript" charset="utf-8"></script>
-<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.7/kindeditor-min.js"></script>
+<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.10/kindeditor-min.js"></script>
 <script>
 	var editor;
 	KindEditor.ready(function(K) {

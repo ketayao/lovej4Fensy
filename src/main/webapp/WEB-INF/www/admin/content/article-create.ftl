@@ -28,15 +28,15 @@
     
 </script>
 
-<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.7/kindeditor-min.js"></script>
-<link rel="stylesheet" type="text/css" href="${rc.contextPath}/styles/kindeditor-4.1.7/shcodeandquote.css" />
+<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.10/kindeditor-min.js"></script>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/styles/kindeditor-4.1.10/shcodeandquote.css" />
 <script>
 	var editor;
 	KindEditor.ready(function(K) {
 		editor = K.create('textarea[id="content"]', {
 			langType : '<#if rc.locale?? && rc.locale != 'zh_CN'>en<#else>${(rc.locale)!'zh_CN'}</#if>',
 			uploadJson : '${rc.contextPath}/admin/file/upload',
-			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.7/plugins/shcode/shcode.css'],
+			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.10/plugins/shcode/shcode.css'],
 			allowFileManager : false,
 			newlineTag : 'br',
 			items : [
@@ -49,6 +49,7 @@
 					'flash', 'media', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
 					'anchor', 'link', 'unlink', '/', 'fullscreen', 'about'
 				],
+			filterMode : false,
 			afterChange : function() {
 				jQuery('#content').validationEngine('hide');
 			}
@@ -61,12 +62,13 @@
 		editorSummary = K.create('textarea[id="summary"]', {
 			langType : '<#if rc.locale?? && rc.locale != 'zh_CN'>en<#else>${(rc.locale)!'zh_CN'}</#if>',
 			uploadJson : '${rc.contextPath}/admin/file/upload',
-			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.7/plugins/shcode/shcode.css'],
+			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.10/plugins/shcode/shcode.css'],
 			allowFileManager : false,
 			newlineTag : 'br',
 		    items : ['bold', 'italic', 'underline', 'strikethrough', 'removeformat','|','insertorderedlist', 'insertunorderedlist', 
 				 'forecolor', 'hilitecolor', 'fontname', 'fontsize',  '|', 'link', 'unlink', 'emoticons', 
 				 'shcode', 'image', 'flash', 'quote', '|', 'fullscreen', 'source','about'],
+			filterMode : false,				 
 			afterChange : function() {
 				jQuery('#summary').validationEngine('hide');
 			}
@@ -138,7 +140,7 @@ function deleteImg(){
 				<input type="button" value="上传" onclick="return ajaxFileUpload();">
 			</p>
 			<p>
-				<img id="showUrl" src="" style="display:none;">
+				<img id="showUrl" src="" style="display:none;" width="666">
 				<input id="delImgBtn" type="button" value="删除" onclick="deleteImg();" style="display:none;">
 				<input id="imgUrl" name="imgUrl" type="hidden">
 			</p>

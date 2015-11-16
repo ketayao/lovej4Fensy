@@ -28,11 +28,15 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.wall.WallConfig;
+import com.ketayao.fensy.db.DBManager;
 import com.ketayao.fensy.util.Exceptions;
 import com.ketayao.lucene.LuceneTasker;
 import com.ketayao.pojo.SiteConfig;
 import com.ketayao.pojo.User;
 import com.ketayao.search.IndexHolder;
+import com.ketayao.util.QiniuUtils;
 
 /** 
  * 	
@@ -51,6 +55,8 @@ public class SystemInitServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        initDruid();
+
         Properties properties = new Properties();
         InputStream inStream = null;
         try {
@@ -84,6 +90,9 @@ public class SystemInitServlet extends HttpServlet {
             initDatabase();
             // 启动lucene更新
             initLucene();
+
+            // 初始化七牛
+            QiniuUtils.init(properties);
             logger
                 .warn("======================system initialize success==========================");
         } catch (Exception e) {
@@ -91,6 +100,24 @@ public class SystemInitServlet extends HttpServlet {
             System.exit(0);
             //throw new ServletException(e);
         }
+    }
+
+    private void initDruid() {
+        WallConfig wallConfig = new WallConfig();
+        wallConfig.setSelectIntoAllow(false);
+        wallConfig.setReplaceAllow(false);
+        wallConfig.setTruncateAllow(false);
+        wallConfig.setCreateTableAllow(false);
+        wallConfig.setAlterTableAllow(false);
+        wallConfig.setDropTableAllow(false);
+        wallConfig.setUseAllow(false);
+        wallConfig.setDescribeAllow(false);
+        wallConfig.setShowAllow(false);
+        wallConfig.setCommitAllow(false);
+        wallConfig.setRollbackAllow(false);
+
+        DruidDataSource dataSource = (DruidDataSource) DBManager.getDataSource();
+        System.out.println(dataSource);
     }
 
     @SuppressWarnings("unchecked")

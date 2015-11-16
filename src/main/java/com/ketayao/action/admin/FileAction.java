@@ -1,46 +1,52 @@
-/**
- * <pre>
- * Copyright:		Copyright(C) 2011-2012, ketayao.com
- * Date:			2013年8月7日
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version          1.0.0
- * Description:		
- *
- * </pre>
- **/
 package com.ketayao.action.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.webutil.StorageService;
+import com.ketayao.util.QiniuUtils;
 
-/** 
- * 	
- * @author 	<a href="mailto:ketayao@gmail.com">ketayao</a>
- * Version  1.0.0
- * @since   2013年8月7日 下午2:36:29 
- */
 public class FileAction {
-	private static final long MAX_IMG_SIZE = 1 * 1024 * 1024;
+    private static final long             MAX_IMG_SIZE = 1048576L;
 
-	public void upload(WebContext rc) throws IOException {
-		try {
-			File imgFile = rc.getImage("imgFile");
-			if (imgFile.length() > MAX_IMG_SIZE) {
-				rc.printJson(new String[] { "error", "message" }, new Object[] {
-						1, "File is too large" });
-				return;
-			}
-			StorageService ss = StorageService.IMAGE;
-			String path = ss.save(imgFile);
-			String url = rc.getContextPath() + ss.getReadPath() + path;
-			rc.printJson(new String[] { "error", "url" },
-					new Object[] { 0, url });
-		} catch (Exception e) {
-			rc.printJson(new String[] {"error", "message"}, new Object[] {
-					1, "图片上传出错！"});
-		}
-	}
+    private static final SimpleDateFormat FMT_FN       = new SimpleDateFormat("yyyy/MM/dd_HHmmss_");
+
+    public void upload(WebContext rc) throws IOException {
+        boolean result = true;
+        try {
+            File imgFile = rc.getImage("imgFile");
+            if (imgFile.length() > MAX_IMG_SIZE) {
+                rc.printJson(new String[] { "error", "message" }, new Object[] {
+                        Integer.valueOf(1), "File is too large" });
+                return;
+            }
+
+            String url;
+            if (QiniuUtils.isUse()) {
+                url = FMT_FN.format(new Date()) + RandomStringUtils.randomAlphanumeric(4) + '.'
+                      + FilenameUtils.getExtension(imgFile.getName()).toLowerCase();
+
+                result = QiniuUtils.upload(QiniuUtils.QINIU_BUCKET, url, imgFile);
+                url = rc.getContextPath() + "/file/images?p=" + url;
+            } else {
+                StorageService ss = StorageService.IMAGE;
+                String path = ss.save(imgFile);
+                url = rc.getContextPath() + ss.getReadPath() + path;
+            }
+            rc.printJson(new String[] { "error", "url" }, new Object[] { Integer.valueOf(0), url });
+        } catch (Exception e) {
+            result = false;
+        }
+
+        if (!result) {
+            rc.printJson(new String[] { "error", "message" }, new Object[] { Integer.valueOf(1),
+                    "图片上传出错！" });
+        }
+    }
 }

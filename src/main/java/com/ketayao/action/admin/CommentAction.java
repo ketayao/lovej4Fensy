@@ -13,6 +13,8 @@
 
 package com.ketayao.action.admin;
 
+import com.ketayao.annotation.RolePermission;
+import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Comment;
 
@@ -24,6 +26,7 @@ import com.ketayao.pojo.Comment;
  */
 
 public class CommentAction {
+    @RolePermission(role = IUser.ROLE_TOP)
     public String d(WebContext rc, Long id) {
         Comment comment = Comment.INSTANCE.get(id);
         comment.delete();

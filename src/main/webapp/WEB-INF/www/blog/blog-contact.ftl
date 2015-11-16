@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="${rc.contextPath}/styles/validator-0.2.1/jquery.validator.css" type="text/css"/>
 <script src="${rc.contextPath}/styles/validator-0.2.1/jquery.validator.js" type="text/javascript" charset="utf-8"></script>
 <script src="${rc.contextPath}/styles/validator-0.2.1/local/zh_CN.js" type="text/javascript" charset="utf-8"></script>
-<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.7/kindeditor-min.js"></script>
+<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.10/kindeditor-min.js"></script>
 <script>
 	var editor;
 	KindEditor.ready(function(K) {

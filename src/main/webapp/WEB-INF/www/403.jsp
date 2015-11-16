@@ -128,5 +128,5 @@
 			</style>
 </head>
 <body id="error-page">
-	<p><strong>禁止操作</strong>：用户权限不足。</p></body>
+	<p><strong>禁止操作</strong>：用户权限不足${error == null ? "" : error }。</p></body>
 </html>

@@ -18,15 +18,15 @@
     
 </script>
 
-<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.7/kindeditor-min.js"></script>
-<link rel="stylesheet" type="text/css" href="${rc.contextPath}/styles/kindeditor-4.1.7/shcodeandquote.css" />
+<script charset="utf-8" src="${rc.contextPath}/styles/kindeditor-4.1.10/kindeditor-min.js"></script>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/styles/kindeditor-4.1.10/shcodeandquote.css" />
 <script>
 	var editor;
 	KindEditor.ready(function(K) {
 		editor = K.create('textarea[id="about"]', {
 			langType : '<#if rc.locale?? && rc.locale != 'zh_CN'>en<#else>${(rc.locale)!'zh_CN'}</#if>',
 			uploadJson : '${rc.contextPath}/admin/file/upload',
-			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.7/plugins/shcode/shcode.css'],
+			cssPath : ['${rc.contextPath}/styles/kindeditor-4.1.10/plugins/shcode/shcode.css'],
 			allowFileManager : false,
 			newlineTag : 'br',
 			items : [
@@ -39,6 +39,7 @@
 					'flash', 'media', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
 					'anchor', 'link', 'unlink', '/', 'fullscreen', 'about'
 				],
+			filterMode : false,			
 			afterChange : function() {
 				jQuery('#about').validationEngine('hide');
 			}
