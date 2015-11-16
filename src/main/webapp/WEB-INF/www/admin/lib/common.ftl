@@ -59,8 +59,10 @@ $(document).ready(function(){
 			<li><a href="${rc.contextPath}/admin/index"" <#if parentNav==index0 >class="active"</#if> >${index0}</a></li>
 			<li><a href="${rc.contextPath}/admin/article/preCreate" <#if parentNav==index1 >class="active"</#if> >${index1}</a></li>
 			<li><a href="${rc.contextPath}/admin/user" <#if parentNav==index2 >class="active"</#if> >${index2}</a></li>
+			<#if user.role == 127>
 			<li><a href="${rc.contextPath}/admin/contact/r" <#if parentNav==index4 >class="active"</#if> >${index4}</a></li>
 			<li><a href="${rc.contextPath}/admin/track/r" <#if parentNav==index3 >class="active"</#if> >${index3}</a></li>
+			</#if>
 			<li class="logout"><a href='${rc.contextPath}/admin/login/logout'>${bundle("site.logout")}</a></li>
 		</ul>
 		<#-- // #end mainNav -->

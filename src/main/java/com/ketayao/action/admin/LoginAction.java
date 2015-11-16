@@ -24,48 +24,48 @@ import com.ketayao.pojo.User;
  * @since   2013年8月5日 下午4:38:12 
  */
 public class LoginAction {
-	private static final String LOGIN = "admin/login";
-	
-	public String index(WebContext rc) {
-		User user = User.getLoginUser(rc);
-		if (user != null && user.getRole() >= IUser.ROLE_TOP) {
-			return "redirect:" + rc.getContextPath() + "/admin/index"; 
-		}
-		
-		return LOGIN;
-	}
-	
-	public String login(WebContext rc) throws Exception {
-		String username = rc.getParam("username");
-		String password = rc.getParam("password");
-		
-		User user = User.INSTANCE.getByAttr("username", username);
-		if (user == null) {
-			rc.setRequestAttr("msg", "NotFoundUserException");
-			return LOGIN;
-		}
-		
-		String dbPwd = CryptUtils.decrypt(user.getPassword(), user.getSalt());
-		if (!password.equals(dbPwd)) {
-			rc.setRequestAttr("msg", "NotMatchUserPasswordException");
-			return LOGIN;
-		}
-		
-		if (user.isBlocked()) {
-			rc.setRequestAttr("msg", "UserIsFrozenException");
-			return LOGIN; 
-		}
+    private static final String LOGIN = "admin/login";
 
-		rc.saveUserInCookie(user, false);
-		return "redirect:" + rc.getContextPath() + "/admin/index";
-	}
-	
-	public String logout(WebContext rc) throws Exception {
-		HttpSession session = rc.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-		rc.deleteUserFromCookie();
-		return "redirect:" + rc.getContextPath() + "/admin/login"; 
-	}
+    public String index(WebContext rc) {
+        User user = User.getLoginUser(rc);
+        if (user != null && user.getRole() >= IUser.ROLE_TOP) {
+            return "redirect:" + rc.getContextPath() + "/admin/index";
+        }
+
+        return LOGIN;
+    }
+
+    public String login(WebContext rc) throws Exception {
+        String username = rc.getParam("username");
+        String password = rc.getParam("password");
+
+        User user = User.INSTANCE.getByAttr("username", username);
+        if (user == null) {
+            rc.setRequestAttr("msg", "NotFoundUserException");
+            return LOGIN;
+        }
+
+        String dbPwd = CryptUtils.decrypt(user.getPassword(), user.getSalt());
+        if (!password.equals(dbPwd)) {
+            rc.setRequestAttr("msg", "NotMatchUserPasswordException");
+            return LOGIN;
+        }
+
+        if (user.isBlocked()) {
+            rc.setRequestAttr("msg", "UserIsFrozenException");
+            return LOGIN;
+        }
+
+        rc.saveUserInCookie(user, false);
+        return "redirect:" + rc.getContextPath() + "/admin/index";
+    }
+
+    public String logout(WebContext rc) throws Exception {
+        HttpSession session = rc.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        rc.deleteUserFromCookie();
+        return "redirect:" + rc.getContextPath() + "/admin/login";
+    }
 }

@@ -11,6 +11,8 @@ package com.ketayao.action.admin;
 
 import java.util.List;
 
+import com.ketayao.annotation.RolePermission;
+import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Contact;
 import com.ketayao.util.PageInfo;
@@ -25,6 +27,7 @@ import com.ketayao.util.PageInfo;
 public class ContactAction {
     private static final String READ = "admin/contact/contact-read";
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String r(WebContext rc) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageIndex(rc.getParam("pageIndex", 1));
@@ -37,6 +40,7 @@ public class ContactAction {
         return READ;
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String u(WebContext rc) {
         Contact contact = Contact.INSTANCE.get(rc.getId());
         contact.setStatus(rc.getParam("status", Contact.Status.NEW));
@@ -48,6 +52,7 @@ public class ContactAction {
         return r(rc);
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String d(WebContext rc) {
         Contact contact = Contact.INSTANCE.get(rc.getId());
         contact.delete();

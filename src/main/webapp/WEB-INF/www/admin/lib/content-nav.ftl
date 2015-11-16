@@ -19,5 +19,10 @@
 <#--parentNavUrl定义-->
 <#assign parentNavUrl>${rc.contextPath}/admin/article/preCreate</#assign>
 
+<#if user.role == 127>
 <#assign sideNav=["${sideNav0}","${sideNav1}","${sideNav2}","${sideNav3}"]> 
-<#assign sideNavUrl=["${sideNavUrl0}","${sideNavUrl1}","${sideNavUrl2}","${sideNavUrl3}"]> 
+<#assign sideNavUrl=["${sideNavUrl0}","${sideNavUrl1}","${sideNavUrl2}","${sideNavUrl3}"]>
+<#else>
+<#assign sideNav=["${sideNav0}","${sideNav1}"]> 
+<#assign sideNavUrl=["${sideNavUrl0}","${sideNavUrl1}"]>
+</#if>

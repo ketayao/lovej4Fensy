@@ -17,6 +17,8 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.ketayao.annotation.RolePermission;
+import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Category;
 import com.ketayao.system.Constants;
@@ -28,67 +30,74 @@ import com.ketayao.system.Constants;
  * @since   2013年8月13日 上午11:37:12 
  */
 public class CategoryAction {
-	
-	private static final String CREATE = "admin/content/category-create";
-	private static final String READ = "admin/content/category-read";
-	private static final String UPDATE = "admin/content/category-update";
-	private static final String VIEW = "admin/content/category-view";
-	
-	public String read(WebContext rc) {
-		List<Category> parents = Category.INSTANCE.findTree(false);
-		rc.getRequest().setAttribute("parents", parents);
-		return READ;
-	}
-	
-	public String preCreate(WebContext rc) {
-		List<Category> parents = Category.INSTANCE.findParent(false);
-		rc.getRequest().setAttribute("parents", parents);
-		return CREATE;
-	}
-	
-	public String create(WebContext rc) throws Exception {
-		Category category = new Category();
-		BeanUtils.populate(category, rc.getRequest().getParameterMap());
-		
-		// 避免页面目录传递父id
-		if (category.getType().equals(Category.Type.PAGE)) {
-			category.setParentId(null);
-		}
 
-		category.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		category.save();
-		
-		rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
-		return preCreate(rc);
-	}
-	
-	public String delete(WebContext rc, String[] args) throws Exception {
-		Category category = new Category();
-		category.setId(NumberUtils.toLong(args[0]));
-		category.delete();
-		
-		return read(rc);
-	}
-	
-	public String view(WebContext rc, String[] args) {
-		Category category = Category.INSTANCE.get(NumberUtils.toLong(args[0]));
-		rc.getRequest().setAttribute("category", category);
-		return VIEW;
-	}
-	
-	public String preUpdate(WebContext rc, String[] args) {
-		view(rc, args);
-		return UPDATE;
-	}
-	
-	public String update(WebContext rc) throws IllegalAccessException, InvocationTargetException {
-		Category category = Category.INSTANCE.get(rc.getId());
-		BeanUtils.populate(category, rc.getRequest().getParameterMap());
-		
-		category.updateAttrs(new String[]{"name", "priority", "description"}, 
-				new Object[]{category.getName(), category.getPriority(), category.getDescription()});
-		rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
-		rc.getRequest().setAttribute("category", category);
-		return UPDATE;
-	}
+    private static final String CREATE = "admin/content/category-create";
+    private static final String READ   = "admin/content/category-read";
+    private static final String UPDATE = "admin/content/category-update";
+    private static final String VIEW   = "admin/content/category-view";
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String read(WebContext rc) {
+        List<Category> parents = Category.INSTANCE.findTree(false);
+        rc.getRequest().setAttribute("parents", parents);
+        return READ;
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String preCreate(WebContext rc) {
+        List<Category> parents = Category.INSTANCE.findParent(false);
+        rc.getRequest().setAttribute("parents", parents);
+        return CREATE;
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String create(WebContext rc) throws Exception {
+        Category category = new Category();
+        BeanUtils.populate(category, rc.getRequest().getParameterMap());
+
+        // 避免页面目录传递父id
+        if (category.getType().equals(Category.Type.PAGE)) {
+            category.setParentId(null);
+        }
+
+        category.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        category.save();
+
+        rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
+        return preCreate(rc);
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String delete(WebContext rc, String[] args) throws Exception {
+        Category category = new Category();
+        category.setId(NumberUtils.toLong(args[0]));
+        category.delete();
+
+        return read(rc);
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String view(WebContext rc, String[] args) {
+        Category category = Category.INSTANCE.get(NumberUtils.toLong(args[0]));
+        rc.getRequest().setAttribute("category", category);
+        return VIEW;
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String preUpdate(WebContext rc, String[] args) {
+        view(rc, args);
+        return UPDATE;
+    }
+
+    @RolePermission(role = IUser.ROLE_TOP)
+    public String update(WebContext rc) throws IllegalAccessException, InvocationTargetException {
+        Category category = Category.INSTANCE.get(rc.getId());
+        BeanUtils.populate(category, rc.getRequest().getParameterMap());
+
+        category.updateAttrs(new String[] { "name", "priority", "description" }, new Object[] {
+                category.getName(), category.getPriority(), category.getDescription() });
+        rc.getRequest().setAttribute(Constants.OPERATION_SUCCESS, Constants.OPERATION_SUCCESS);
+        rc.getRequest().setAttribute("category", category);
+        return UPDATE;
+    }
 }

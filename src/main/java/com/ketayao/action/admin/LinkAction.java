@@ -17,6 +17,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.ketayao.annotation.RolePermission;
+import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.pojo.Link;
 import com.ketayao.system.Constants;
@@ -36,11 +38,12 @@ public class LinkAction {
     private final static String UPDATE = "admin/contact/link-update";
 
     //private final static String DELETE = "admin/contact/link-read";
-
+    @RolePermission(role = IUser.ROLE_TOP)
     public String pc() {
         return CREATE;
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String c(WebContext rc) throws IllegalAccessException, InvocationTargetException {
         Link link = new Link();
         rc.populate(link);
@@ -64,6 +67,7 @@ public class LinkAction {
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
      */
+    @RolePermission(role = IUser.ROLE_TOP)
     public String r(WebContext rc) throws IllegalAccessException, InvocationTargetException {
         PageInfo pageInfo = new PageInfo();
         rc.populate(pageInfo);
@@ -77,6 +81,7 @@ public class LinkAction {
         return READ;
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String pu(WebContext rc) {
         Link link = Link.INSTANCE.get(rc.getId());
         rc.setRequestAttr("link", link);
@@ -84,6 +89,7 @@ public class LinkAction {
         return UPDATE;
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String u(WebContext rc) throws IllegalAccessException, InvocationTargetException {
         Link link = Link.INSTANCE.get(rc.getId());
         rc.populate(link);
@@ -99,6 +105,7 @@ public class LinkAction {
         return UPDATE;
     }
 
+    @RolePermission(role = IUser.ROLE_TOP)
     public String d(WebContext rc) throws IllegalAccessException, InvocationTargetException {
         Link link = Link.INSTANCE.get(rc.getId());
         link.delete();

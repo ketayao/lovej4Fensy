@@ -33,7 +33,7 @@
 </script>
 <article id="post-imgTitle" class="post type-post status-publish format-standard hentry">
 <section id="slider-wrapper"><!-- Nivo promo slider -->
-    <div id="slider" class="nivoSlider">
+    <div id="slider" class="nivoSlider" style="height:300px;">
     	<#list imgArticles as a>
     	<img src="${a.imgUrl}" alt="" title="#htmlcaption-${a.id}">
     	</#list>

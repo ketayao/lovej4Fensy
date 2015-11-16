@@ -121,24 +121,23 @@ span.highlight {
 	<script type="text/javascript">
 		$().ready(function(){
 			$("#searchsubmit").click(function(event){
-				event.preventDefault();
 			  	var v = $("#s").val().trim();
 				if (v == '') {
 					return false;
 				}
-				$("#searchform").submit();
+				
+				url = "${rc.contextPath}/archive/searchText?s=" + v;
+				window.location.href = encodeURI(encodeURI(url));
 			});
 		});	
 	</script>     
     <div id="secondary" class="widget-area" role="complementary">
       <aside id="search-2" class="widget widget_search">
-        <form role="search" method="get" id="searchform" class="searchform" action="${rc.contextPath}/archive/searchText">
           <div>
             <label class="screen-reader-text" for="s">搜索：</label>
             <input name="s" id="s" type="text">
             <input id="searchsubmit" value="搜索" type="submit">
           </div>
-        </form>
       </aside>
       <aside id="views-2" class="widget widget_views">
         <h3 class="widget-title">热门文章</h3>
