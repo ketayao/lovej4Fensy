@@ -28,15 +28,17 @@ public class CustomerInterceptor extends InterceptorAdapter {
         User user = User.getLoginUser(rc);
 
         String url = rc.getURIAndExcludeContextPath();
-        if (url.startsWith("/admin") && !url.startsWith("/admin/login")) {
-            if (user == null) {
-                rc.redirect(rc.getContextPath() + "/admin/login");
-                return false;
-            }
+        if (url.startsWith("/admin")) {
+            if (!url.startsWith("/admin/login") && !url.startsWith("/admin/forget")) {
+                if (user == null) {
+                    rc.redirect(rc.getContextPath() + "/admin/login");
+                    return false;
+                }
 
-            if (user.getRole() < RolePermission.ROLE_BACKGROUND) {
-                error(rc, null);
-                return false;
+                if (user.getRole() < RolePermission.ROLE_BACKGROUND) {
+                    error(rc, null);
+                    return false;
+                }
             }
         }
 
