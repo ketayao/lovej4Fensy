@@ -11,6 +11,7 @@
 
 package com.ketayao.pojo;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,177 +29,219 @@ import com.ketayao.system.Constants;
 
 public class User extends POJO implements IUser {
 
-	/** 描述 */
-	private static final long serialVersionUID = 3224309058267477565L;
-	
-	public static final User INSTANCE = new User();
+    /** 描述 */
+    private static final long serialVersionUID = 3224309058267477565L;
 
-	private String username;// 登录名
-	private String nickname;// 昵称
-	private String password;// 密码
-	private String salt;//密钥
-	//使用0来表示False，1表示True
-	private byte frozen = 0;//是否冻结
-	private String email;
-	
-	//private boolean blocked = false;
-	
-	private byte role = IUser.ROLE_GENERAL;
-	
-	/**  
-	 * 返回 username 的值   
-	 * @return username  
-	 */
-	public String getUsername() {
-		return username;
-	}
+    public static final User  INSTANCE         = new User();
 
-	/**  
-	 * 设置 username 的值  
-	 * @param username
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    private String            username;                               // 登录名
+    private String            nickname;                               // 昵称
+    private String            password;                               // 密码
+    private String            salt;                                   //密钥
+    //使用0来表示False，1表示True
+    private byte              frozen           = 0;                   //是否冻结
+    private String            email;
+    /**
+     * 找回密码唯一标识
+     */
+    private String            forgetCode;
+    /**
+     * 有效时间
+     */
+    private Date              forgetDuration;
 
-	/**  
-	 * 返回 nickname 的值   
-	 * @return nickname  
-	 */
-	public String getNickname() {
-		return nickname;
-	}
+    //private boolean blocked = false;
 
-	/**  
-	 * 设置 nickname 的值  
-	 * @param nickname
-	 */
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    private byte              role             = IUser.ROLE_GENERAL;
 
-	/**  
-	 * 返回 password 的值   
-	 * @return password  
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**  
+     * 返回 username 的值   
+     * @return username  
+     */
+    public String getUsername() {
+        return username;
+    }
 
-	/**  
-	 * 设置 password 的值  
-	 * @param password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**  
+     * 设置 username 的值  
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**  
-	 * 返回 salt 的值   
-	 * @return salt  
-	 */
-	public String getSalt() {
-		return salt;
-	}
+    /**  
+     * 返回 nickname 的值   
+     * @return nickname  
+     */
+    public String getNickname() {
+        return nickname;
+    }
 
-	/**  
-	 * 设置 salt 的值  
-	 * @param salt
-	 */
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    /**  
+     * 设置 nickname 的值  
+     * @param nickname
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	/**  
-	 * 返回 frozen 的值   
-	 * @return frozen  
-	 */
-	public byte getFrozen() {
-		return frozen;
-	}
+    /**  
+     * 返回 password 的值   
+     * @return password  
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**  
-	 * 设置 frozen 的值  
-	 * @param frozen
-	 */
-	public void setFrozen(byte frozen) {
-		this.frozen = frozen;
-	}
+    /**  
+     * 设置 password 的值  
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**  
-	 * 返回 email 的值   
-	 * @return email  
-	 */
-	public String getEmail() {
-		return email;
-	}
+    /**  
+     * 返回 salt 的值   
+     * @return salt  
+     */
+    public String getSalt() {
+        return salt;
+    }
 
-	/**  
-	 * 设置 email 的值  
-	 * @param email
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    /**  
+     * 设置 salt 的值  
+     * @param salt
+     */
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-	/**  
-	 * 设置 role 的值  
-	 * @param role
-	 */
-	public void setRole(byte role) {
-		this.role = role;
-	}
+    /**  
+     * 返回 frozen 的值   
+     * @return frozen  
+     */
+    public byte getFrozen() {
+        return frozen;
+    }
 
-	/**  
-	 * @param request
-	 * @return  
-	 */
-	public static User getLoginUser(WebContext rc) {
-		Object loginUser = rc.getRequestAttr(Constants.LOGIN_USER);
-		if (loginUser == null) {
-			// get user id from cookie
-			IUser cookie_user = rc.getUserFromCookie();
-			if (cookie_user == null) {
-				return null;
-			}
-			User user = User.INSTANCE.get(cookie_user.getId());
-			if (user != null
-					&& StringUtils.equals(user.getPassword(),
-							cookie_user.getPassword())) {
-				rc.setRequestAttr(Constants.LOGIN_USER, user);
-				return user;
-			}
-		}
-		return (User) loginUser;
-	}
-	
-	/**  
-	 * 返回 blocked 的值   
-	 * @return blocked  
-	 */
-	public boolean isBlocked() {
-		if (frozen == 1) {
-			return true;
-		} 
-		return false;
-	}
+    /**  
+     * 设置 frozen 的值  
+     * @param frozen
+     */
+    public void setFrozen(byte frozen) {
+        this.frozen = frozen;
+    }
 
-	/**  
-	 * 返回 role 的值   
-	 * @return role  
-	 */
-	public byte getRole() {
-		return role;
-	}
+    /**  
+     * 返回 email 的值   
+     * @return email  
+     */
+    public String getEmail() {
+        return email;
+    }
 
-	/**   
-	 * @return  
-	 * @see com.ketayao.fensy.bean.POJO#listInsertableFields()  
-	 */
-	@Override
-	protected Map<String, Object> listInsertableFields() {
-		Map<String, Object> map = super.listInsertableFields();
-		map.remove("blocked");
-		return map;
-	}
+    /**  
+     * 设置 email 的值  
+     * @param email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Getter method for property <tt>forgetCode</tt>.
+     * 
+     * @return property value of forgetCode
+     */
+    public String getForgetCode() {
+        return forgetCode;
+    }
+
+    /**
+     * Setter method for property <tt>forgetCode</tt>.
+     * 
+     * @param forgetCode value to be assigned to property forgetCode
+     */
+    public void setForgetCode(String forgetCode) {
+        this.forgetCode = forgetCode;
+    }
+
+    /**
+     * Getter method for property <tt>forgetDuration</tt>.
+     * 
+     * @return property value of forgetDuration
+     */
+    public Date getForgetDuration() {
+        return forgetDuration;
+    }
+
+    /**
+     * Setter method for property <tt>forgetDuration</tt>.
+     * 
+     * @param forgetDuration value to be assigned to property forgetDuration
+     */
+    public void setForgetDuration(Date forgetDuration) {
+        this.forgetDuration = forgetDuration;
+    }
+
+    /**  
+     * 设置 role 的值  
+     * @param role
+     */
+    public void setRole(byte role) {
+        this.role = role;
+    }
+
+    /**  
+     * @param request
+     * @return  
+     */
+    public static User getLoginUser(WebContext rc) {
+        Object loginUser = rc.getRequestAttr(Constants.LOGIN_USER);
+        if (loginUser == null) {
+            // get user id from cookie
+            IUser cookie_user = rc.getUserFromCookie();
+            if (cookie_user == null) {
+                return null;
+            }
+            User user = User.INSTANCE.get(cookie_user.getId());
+            if (user != null && StringUtils.equals(user.getPassword(), cookie_user.getPassword())) {
+                rc.setRequestAttr(Constants.LOGIN_USER, user);
+                return user;
+            }
+        }
+        return (User) loginUser;
+    }
+
+    /**  
+     * 返回 blocked 的值   
+     * @return blocked  
+     */
+    public boolean isBlocked() {
+        if (frozen == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**  
+     * 返回 role 的值   
+     * @return role  
+     */
+    public byte getRole() {
+        return role;
+    }
+
+    /**   
+     * @return  
+     * @see com.ketayao.fensy.bean.POJO#listInsertableFields()  
+     */
+    @Override
+    protected Map<String, Object> listInsertableFields() {
+        Map<String, Object> map = super.listInsertableFields();
+        map.remove("blocked");
+        return map;
+    }
 }

@@ -14,6 +14,13 @@
 <script>
     jQuery(document).ready(function(){
         jQuery("#formID").validationEngine();
+        
+        $("#forget").click(function(){
+        	var username = $("#username").val();
+        	if (username != '') {
+        		location.href='${rc.contextPath }/admin/forget/forgetPwd?username='+username;	
+        	}
+        });
     });
 </script>
 <body>
@@ -42,6 +49,8 @@
         <div class="btn">
 			<div class="remember">
         		<input type="checkbox" name="rememberMe"/>${bundle("login.remember")}
+        		&nbsp;&nbsp;&nbsp;&nbsp;
+        		<a id="forget" href='javascript:;'>忘记密码？</a>
 			</div>
 			<div class="logindiv">
             <input type="submit" class="login" value=""/>
