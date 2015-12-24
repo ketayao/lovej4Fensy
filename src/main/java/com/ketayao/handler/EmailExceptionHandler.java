@@ -1,7 +1,7 @@
 /**
  * <pre>
- * Date:			2013年9月7日
- * Author:			<a href="mailto:ketayao@gmail.com">ketayao</a>
+ * Date:            2013年9月7日
+ * Author:          <a href="mailto:ketayao@gmail.com">ketayao</a>
  * Description:
  * </pre>
  **/
@@ -202,15 +202,17 @@ public class EmailExceptionHandler extends SimpleExceptionHandler {
 
         if (org.apache.commons.lang3.StringUtils
             .equals(SystemConfig.getConfig().get("blog.exception.email.switch"), "true")) {
-            Thread thread = new Thread(new Runnable() {
 
-                @Override
-                public void run() {
-                    reportError(rc.getRequest(), exception);
-                }
-            });
-            thread.start();
         }
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                reportError(rc.getRequest(), exception);
+            }
+        });
+        thread.start();
 
         return view;
     }
