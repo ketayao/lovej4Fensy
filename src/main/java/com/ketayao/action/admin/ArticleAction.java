@@ -166,7 +166,8 @@ public class ArticleAction extends AbstractAction {
             new Object[] { article.getTitle(), article.getContent(), article.getKeywords(),
                            article.getSummary(), article.getStatus(), article.getTrash(),
                            article.getModifyTime(), article.getTopTime(), article.getCategoryId(),
-                           article.getImgUrl() });
+                           StringUtils.isNotBlank(article.getImgUrl()) ? article.getImgUrl()
+                               : null });
 
         String tags = rc.getParam("tags");
         String[] tagArray = null;
