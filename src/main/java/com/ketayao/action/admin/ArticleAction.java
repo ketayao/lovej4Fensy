@@ -155,16 +155,18 @@ public class ArticleAction extends AbstractAction {
         boolean top = BooleanUtils.toBoolean(rc.getParam("top", "false"));
         if (top == true) {
             article.setTopTime(timestamp);
+        } else {
+            article.setTopTime(null);
         }
 
         article.setModifyTime(timestamp);
         article.updateAttrs(
             new String[] { "title", "content", "keywords", "summary", "status", "trash",
-                    "modifyTime", "topTime", "categoryId", "imgUrl" },
+                           "modifyTime", "topTime", "categoryId", "imgUrl" },
             new Object[] { article.getTitle(), article.getContent(), article.getKeywords(),
-                    article.getSummary(), article.getStatus(), article.getTrash(),
-                    article.getModifyTime(), article.getTopTime(), article.getCategoryId(),
-                    article.getImgUrl() });
+                           article.getSummary(), article.getStatus(), article.getTrash(),
+                           article.getModifyTime(), article.getTopTime(), article.getCategoryId(),
+                           article.getImgUrl() });
 
         String tags = rc.getParam("tags");
         String[] tagArray = null;
