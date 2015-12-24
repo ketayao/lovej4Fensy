@@ -68,4 +68,5 @@ public class LoginAction {
         rc.deleteUserFromCookie();
         return "redirect:" + rc.getContextPath() + "/admin/login";
     }
+
 }

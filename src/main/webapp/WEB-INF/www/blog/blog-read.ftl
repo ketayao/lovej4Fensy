@@ -31,20 +31,22 @@
         });
     });
 </script>
-<article id="post-imgTitle" class="post type-post status-publish format-standard hentry">
-<section id="slider-wrapper"><!-- Nivo promo slider -->
-    <div id="slider" class="nivoSlider" style="height:300px;">
-    	<#list imgArticles as a>
-    	<img src="${a.imgUrl}" alt="" title="#htmlcaption-${a.id}">
-    	</#list>
-    </div>
-    <#list imgArticles as a>
-    <div id="htmlcaption-${a.id}" class="nivo-html-caption">
-        <p><a href="${rc.contextPath}/view/${a.id}">${a.title}</a></p> 
-    </div>
-    </#list>
-</section>
-</article>
+	<#if imgArticles?size != 0>
+	<article id="post-imgTitle" class="post type-post status-publish format-standard hentry">
+	<section id="slider-wrapper"><!-- Nivo promo slider -->
+	    <div id="slider" class="nivoSlider" style="height:300px;">
+	    	<#list imgArticles as a>
+	    	<img src="${a.imgUrl}" alt="" title="#htmlcaption-${a.id}">
+	    	</#list>
+	    </div>
+	    <#list imgArticles as a>
+	    <div id="htmlcaption-${a.id}" class="nivo-html-caption">
+	        <p><a href="${rc.contextPath}/view/${a.id}">${a.title}</a></p> 
+	    </div>
+	    </#list>
+	</section>
+	</article>
+	</#if>
 </#if>
 
 <#list articles as a>
