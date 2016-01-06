@@ -36,7 +36,7 @@ import com.ketayao.lucene.LuceneTasker;
 import com.ketayao.pojo.SiteConfig;
 import com.ketayao.pojo.User;
 import com.ketayao.search.IndexHolder;
-import com.ketayao.util.QiniuUtils;
+import com.ketayao.util.QiNiuUtils;
 
 /** 
  * 	
@@ -66,8 +66,8 @@ public class SystemInitServlet extends HttpServlet {
 
             Set<Entry<Object, Object>> keys = properties.entrySet();
             for (Entry<Object, Object> entry : keys) {
-                SystemConfig.getConfig()
-                    .put(entry.getKey().toString(), entry.getValue().toString());
+                SystemConfig.getConfig().put(entry.getKey().toString(),
+                    entry.getValue().toString());
             }
 
             getServletContext().setAttribute(Constants.SYSTEM_CONFIG, SystemConfig.getConfig());
@@ -92,7 +92,8 @@ public class SystemInitServlet extends HttpServlet {
             initLucene();
 
             // 初始化七牛
-            QiniuUtils.init(properties);
+            QiNiuUtils.init(properties);
+
             logger
                 .warn("======================system initialize success==========================");
         } catch (Exception e) {
@@ -140,8 +141,8 @@ public class SystemInitServlet extends HttpServlet {
         if (siteConfig == null) {
             siteConfig = new SiteConfig();
             siteConfig.setAbout(SystemConfig.getConfig().get("lovej.siteConfig.about"));
-            siteConfig.setContactDescription(SystemConfig.getConfig().get(
-                "lovej.siteConfig.contact"));
+            siteConfig
+                .setContactDescription(SystemConfig.getConfig().get("lovej.siteConfig.contact"));
             siteConfig.setIcp(SystemConfig.getConfig().get("lovej.siteConfig.icp"));
             siteConfig.setName(SystemConfig.getConfig().get("lovej.siteConfig.name"));
             siteConfig.setUrl(SystemConfig.getConfig().get("lovej.siteConfig.url"));
@@ -154,8 +155,8 @@ public class SystemInitServlet extends HttpServlet {
     }
 
     private void initLucene() throws IOException {
-        long scheduleTime = NumberUtils.toLong(
-            SystemConfig.getConfig().get("blog.lucene.scheduleTime"), 1000 * 60 * 5);
+        long scheduleTime = NumberUtils
+            .toLong(SystemConfig.getConfig().get("blog.lucene.scheduleTime"), 1000 * 60 * 5);
 
         LuceneTasker tasker = new LuceneTasker(SystemConfig.getConfig().get("blog.lucene.path"),
             scheduleTime);

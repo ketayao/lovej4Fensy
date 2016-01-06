@@ -3,7 +3,7 @@ body {background-color:#edf1f3; font-family:Verdana, Geneva, sans-serif; font-si
 #content {
   position: absolute;
   width:340px;
-  height:340px;
+  height: 410px;
   left:50%;
   top:50%;
   margin-left:-170px;
@@ -14,11 +14,11 @@ body {background-color:#edf1f3; font-family:Verdana, Geneva, sans-serif; font-si
 #content div.tl {width:10px; height:10px; background: url('../images/tl.jpg');}
 #content div.t {width:320px; height:9px; border-top:solid 1px #d2dce1;}
 #content div.tr {width:10px; height:10px; background: url('../images/tr.jpg')}	
-#content div.c  {width:338px; height:320px; border:none; border-left:solid 1px #d2dce1; border-right:solid 1px #d2dce1;}
+#content div.c  {width:338px;height: 390px; border:none; border-left:solid 1px #d2dce1; border-right:solid 1px #d2dce1;}
 #content div.bl {width:10px; height:10px; background: url('../images/bl.jpg');}
 #content div.b {width:320px; height:9px; border-bottom:solid 1px #d2dce1; background-color:#eff4f6;}
 #content div.br {width:10px; height:10px; background: url('../images/br.jpg')}	
-div.c div.in {width:338px; height:260px;}
+div.c div.in {width:338px;height: 330px;}
 
 div.c div.btn {width:298px; height:74px; background-color:#eff4f6; padding:0px 20px !important; border-top:solid 1px #dde0e8;}
 div.c div.btn div {margin-top:20px;}

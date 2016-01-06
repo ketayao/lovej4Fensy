@@ -160,7 +160,7 @@ function deleteImg(){
 		<td>${a.description}</td>
 		<td>${a.download}</td>
 		<td class="action">
-			<a href="${rc.contextPath}/action/download?file=${a.url}" class="view" target="_blank">${bundle("form.download")}</a>
+			<a href="${rc.contextPath}/download?file=${a.url}" class="view" target="_blank">${bundle("form.download")}</a>
 			<a href="${rc.contextPath}/admin/attach/delete/${a.id}?id=${a.articleId}&categoryId=${categoryId}&pageIndex=${pageIndex}" class="delete">${bundle("form.delete")}</a>
 		</td>
 	</tr>

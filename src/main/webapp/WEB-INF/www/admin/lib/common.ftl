@@ -40,7 +40,7 @@ $(document).ready(function(){
 <body>
 	<div id="wrapper">
 		<div class="logo">
-			<a href="${systemConfig['lovej.site.url']}"></a>
+			<a href="${rc.contextPath}"></a>
 			<div class="banner">
 				${bundle("login.welcome", user.nickname!'')}
 			</div>

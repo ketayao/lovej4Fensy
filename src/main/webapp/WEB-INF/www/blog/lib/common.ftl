@@ -88,7 +88,7 @@ span.highlight {
 <div id="page" class="hfeed site">
   <header id="masthead" class="site-header" role="banner">
     <hgroup>
-      <h1 class="site-title"><a href="${siteConfig.url}" title="${siteConfig.name}" rel="home">${siteConfig.name}</a></h1>
+      <h1 class="site-title"><a href="${rc.contextPath}" title="${siteConfig.name}" rel="home">${siteConfig.name}</a></h1>
       <h2 class="site-description">${siteConfig.about}</h2>
     </hgroup>
     <nav id="site-navigation" class="main-navigation" role="navigation">
@@ -198,7 +198,7 @@ span.highlight {
 		<object type="application/x-shockwave-flash" data="${rc.contextPath}/styles/dewplayer/dewplayer-playlist.swf" width="240" height="200" id="dewplayer" name="dewplayer">
 			<param name="wmode" value="transparent" />
 			<param name="movie" value="dewplayer-playlist.swf" />
-			<param name="flashvars" value="showtime=true&autoreplay=true&autostart=false&xml=${rc.contextPath}/styles/dewplayer/playlist.xml" />
+			<param name="flashvars" value="showtime=true&autoreplay=true&autostart=true&xml=${rc.contextPath}/styles/dewplayer/playlist.xml" />
 		</object>		         
       </aside>      
       <aside id="meta-2" class="widget widget_meta">

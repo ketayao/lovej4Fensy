@@ -12,9 +12,12 @@ package com.ketayao.action.admin;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.ketayao.fensy.mvc.IUser;
 import com.ketayao.fensy.mvc.WebContext;
 import com.ketayao.fensy.util.CryptUtils;
+import com.ketayao.fensy.webutil.ImageCaptchaService;
 import com.ketayao.pojo.User;
 
 /** 
@@ -38,6 +41,19 @@ public class LoginAction {
     public String login(WebContext rc) throws Exception {
         String username = rc.getParam("username");
         String password = rc.getParam("password");
+        String captcha = rc.getParam("verifyCode");
+
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)
+            || StringUtils.isBlank(captcha)) {
+            rc.setRequestAttr("msg", "输入项不能为空");
+            return LOGIN;
+        }
+
+        boolean correct = ImageCaptchaService.validate(rc.getRequest());
+        if (!correct) {
+            rc.setRequestAttr("msg", "验证码错误");
+            return LOGIN;
+        }
 
         User user = User.INSTANCE.getByAttr("username", username);
         if (user == null) {

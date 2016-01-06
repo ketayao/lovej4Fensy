@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="refresh" content="20; url=${siteConfig.url}/">
+	<meta http-equiv="refresh" content="20; url=${rc.contextPath}">
 	<title>NOT FOUND | ${siteConfig.name}</title>
 	<style type="text/css">
 		html {
@@ -128,7 +128,7 @@
 	<header class="entry-header">
 		<h1 class="entry-title">抱歉，您访问的页面没找到。</h1>
 		<br/>
-		<a class="button" href="javascript:history.go(-1)">返回上页</a> <a class="button" href="${systemConfig['lovej.site.url']}/">返回首页</a>
+		<a class="button" href="javascript:history.go(-1)">返回上页</a> <a class="button" href="${rc.contextPath}">返回首页</a>
 	</header>
 </body>
 </html>

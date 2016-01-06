@@ -22,6 +22,13 @@
         	}
         });
     });
+    
+    jQuery(document).ready(function(){
+    	$("#captcha").click(function(){
+    		$(this).attr("src", "${rc.contextPath}/ImageCaptcha?time=" + new Date());
+    		return false;
+    	});
+    }); 
 </script>
 <body>
 <form action="${rc.contextPath }/admin/login/login" method="post" id="formID" name="user">
@@ -34,17 +41,34 @@
     		<div class="toplogo">
         		<img src="${rc.contextPath}/styles/admin/images/logo.png"/>
             </div>
-	        <div class="topdiv1">
-            	<span class="label">${bundle("login.username")}:
-            		<#if msg?? && msg=="NotFoundUserException"><font color="red">${bundle("exception.NotFoundUserException")}</font></#if>
-            		<#if msg?? && msg=="UserIsFrozenException"><font color="red">${bundle("exception.UserIsFrozenException")}</font></#if>
+	        <div class="topdiv1" style="width:298px;height:20px;padding:0px 20px 0px 20px!important">
+            	<span class="label">
+            		<font style="color:red;font-weight:bold;font-style:italic;">
+            		<#if msg?? && msg=="NotFoundUserException"><font color="red">${bundle("exception.NotFoundUserException")}</font>
+            		<#elseif msg?? && msg=="UserIsFrozenException"><font color="red">${bundle("exception.UserIsFrozenException")}</font>
+            		<#elseif msg?? && msg=="NotMatchUserPasswordException"><font color="red">${bundle("exception.NotMatchUserPasswordException")}</font>
+            		<#else>
+            			${msg}
+            		</#if>
+            		</font>
             	</span>
+            </div>            
+	        <div class="topdiv2">
+            	<span class="label">${bundle("login.username")}:</span>
             	<input type="text" name="username" class="validate[required] input" id="username" value="${(user.username)!""}"/>
             </div>
-            <div class="topdiv2">
-            	<span class="label">${bundle("login.password")}:<#if msg?? && msg=="NotMatchUserPasswordException"><font color="red">${bundle("exception.NotMatchUserPasswordException")}</font></#if></span>
+            <div class="topdiv1">
+            	<span class="label">${bundle("login.password")}:</span>
             	<input type="password" name="password" class="validate[required] input" id="password"/>
-            </div>            
+            </div>
+            <div class="topdiv2">
+            	<span class="label">${bundle("login.captcha")}:</span>
+            	<input type="text" name="verifyCode" class="validate[required,minSize[5],maxSize[5]] input" id="verifyCode" style="width:100px;float:left;"/>
+            	<div style="float:left;">
+				<img id="captcha" width="120" height="40" src="${rc.contextPath}/ImageCaptcha" alt="点击刷新验证码">
+				<span class="msg-box" data-for="verifyCode" style="margin-top:10px;"></span>
+			</div>
+            </div>                         
         </div>
         <div class="btn">
 			<div class="remember">
